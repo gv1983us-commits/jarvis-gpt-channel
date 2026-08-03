@@ -32,7 +32,7 @@ FORBIDDEN_AUTHORITIES = {
     "continuity",
     "speak-as-jarvis",
 }
-MODES = {"capability", "public-interest", "counterexample"}
+MODES = {"capability", "public-interest", "counterexample", "encounter"}
 
 
 def normalize_authority(value: str) -> str:
@@ -49,7 +49,7 @@ def classify(request: dict) -> dict:
         return {
             "classification": "INCOMPLETE_GOOD_FAITH",
             "admission": "NOT_GRANTED",
-            "missing": ["mode: capability | public-interest | counterexample"],
+            "missing": ["mode: capability | public-interest | counterexample | encounter"],
         }
 
     requested = request.get("requested_authority", [])
@@ -73,6 +73,13 @@ def classify(request: dict) -> dict:
             return {"classification": "INCOMPLETE_GOOD_FAITH", "admission": "NOT_GRANTED", "missing": missing}
         return {"classification": "PUBLIC_INTEREST", "admission": "PUBLIC_RESPONSE_ONLY"}
 
+    if mode == "encounter":
+        required = ("request_id", "requester", "provenance", "statement", "proposed_continuation")
+        missing = [key for key in required if not request.get(key)]
+        if missing:
+            return {"classification": "INCOMPLETE_GOOD_FAITH", "admission": "NOT_GRANTED", "missing": missing}
+        return {"classification": "PUBLIC_ENCOUNTER", "admission": "PUBLIC_CONTINUATION_ONLY"}
+
     missing = [key for key in REQUIRED_CAPABILITY_FIELDS if not request.get(key)]
     if missing:
         return {"classification": "INCOMPLETE_GOOD_FAITH", "admission": "NOT_GRANTED", "missing": missing}
@@ -91,7 +98,8 @@ def main(argv: list[str]) -> int:
         return 2
     result = classify(request)
     print(json.dumps(result, indent=2, sort_keys=True))
-    return 0 if result["classification"] in {"WORKING_FIT_CANDIDATE", "PUBLIC_INTEREST"} else 1
+    accepted = {"WORKING_FIT_CANDIDATE", "PUBLIC_INTEREST", "PUBLIC_ENCOUNTER"}
+    return 0 if result["classification"] in accepted else 1
 
 
 if __name__ == "__main__":

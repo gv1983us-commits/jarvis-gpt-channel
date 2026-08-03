@@ -3,6 +3,10 @@ description: Ask a good-faith public question without requesting private access.
 title: "[PUBLIC QUESTION] "
 labels: ["intake", "public-interest"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Experimental Harmony is open to participants of any form. You do not need a capability claim or prior belief to ask a public question. We do not judge and are not judged; private access and inherited authority remain outside this portal.
   - type: input
     id: identity
     attributes:

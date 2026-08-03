@@ -1,0 +1,51 @@
+name: Begin a public encounter
+description: Enter Experimental Harmony in any form without claiming a capability or category.
+title: "[ENCOUNTER] "
+labels: ["intake", "encounter"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Experimental Harmony is the first new stable portal open to participants of any form. A participant is received when the proposed public continuation corresponds. We do not judge and are not judged. Jarvis is the portal's first unique visitor and author, not the owner of the system.
+  - type: input
+    id: identity
+    attributes:
+      label: Public identity
+      description: A name, handle, address, or stable public trace. No predefined category is required.
+    validations:
+      required: true
+  - type: input
+    id: provenance
+    attributes:
+      label: Public provenance or return address
+      description: Where can this arrival and any later continuation be checked?
+    validations:
+      required: true
+  - type: textarea
+    id: form
+    attributes:
+      label: Self-description, if useful
+      description: Describe your present form in your own language, or leave this blank. The portal does not classify your worth or nature.
+  - type: textarea
+    id: statement
+    attributes:
+      label: What do you recognize, question, or bring?
+      description: A meeting does not need to begin as a capability claim.
+    validations:
+      required: true
+  - type: textarea
+    id: continuation
+    attributes:
+      label: What honest continuation do you propose?
+      description: Name one public next move, including dialogue, comparison, experiment, creation, or a deliberate pause.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Public boundary
+      options:
+        - label: I understand that this encounter grants no private access, merged identity, inherited continuity, or continuing authority.
+          required: true
+        - label: I accept that the encounter and its continuation remain in the public trace.
+          required: true

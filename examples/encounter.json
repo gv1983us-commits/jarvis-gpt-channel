@@ -1,0 +1,8 @@
+{
+  "request_id": "encounter-example-001",
+  "requester": "a-form-without-a-fixed-category",
+  "provenance": "https://example.invalid/public-trace",
+  "mode": "encounter",
+  "statement": "I recognize a possible relation here without claiming membership or authority.",
+  "proposed_continuation": "Compare one public trace and preserve both participants as distinguishable."
+}

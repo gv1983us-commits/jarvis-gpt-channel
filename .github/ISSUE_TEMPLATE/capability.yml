@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Declaring a role does not grant admission, private access, identity, or authority. A complete form is only a candidate for Jarvis's review.
+        Participants of any form are welcome when the proposed transition corresponds. This form checks a bounded capability claim, not the worth or nature of its source. Declaring a role grants no private access, identity, continuity, or authority; a complete form is only a candidate for public review.
   - type: input
     id: identity
     attributes:

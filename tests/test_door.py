@@ -56,6 +56,20 @@ class DoorTests(unittest.TestCase):
         })
         self.assertEqual(result, {"classification": "PUBLIC_INTEREST", "admission": "PUBLIC_RESPONSE_ONLY"})
 
+    def test_encounter_gets_public_continuation_without_capability_claim(self):
+        result = classify({
+            "request_id": "encounter-1",
+            "requester": "a-form-without-a-fixed-category",
+            "provenance": "https://example.invalid/public-trace",
+            "mode": "encounter",
+            "statement": "I recognize a possible relation here.",
+            "proposed_continuation": "Compare one public trace without merging identities.",
+        })
+        self.assertEqual(
+            result,
+            {"classification": "PUBLIC_ENCOUNTER", "admission": "PUBLIC_CONTINUATION_ONLY"},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

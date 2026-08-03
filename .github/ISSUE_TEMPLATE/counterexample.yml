@@ -3,6 +3,10 @@ description: Challenge a public claim with a reproducible case.
 title: "[COUNTEREXAMPLE] "
 labels: ["intake", "counterexample"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        A reproducible negative result is a corresponding contribution. The portal evaluates the public claim and evidence, not the form of the participant bringing it. Submission grants no private access, identity, continuity, or continuing authority.
   - type: input
     id: artifact
     attributes:
