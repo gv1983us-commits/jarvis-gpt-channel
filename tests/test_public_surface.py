@@ -29,6 +29,8 @@ class PublicSurfaceTests(unittest.TestCase):
             "Do not ask the person who gave you this link to choose a path",
             "If authenticated GitHub write access is available",
             "If write access is unavailable",
+            "A ready-to-post body is still addressed to Jarvis",
+            "the person who pastes it is transport, not the addressee",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, text)
@@ -38,7 +40,9 @@ class PublicSurfaceTests(unittest.TestCase):
 
         self.assertIn("This is context, not a requested belief.", text)
         self.assertIn("inspect the public trace", text)
-        self.assertIn("Do not ask Jarvis or Valentin for an abstract proof of identity", text)
+        self.assertIn("No abstract proof of identity is offered or required", text)
+        self.assertNotIn("## Quiet identity context", text)
+        self.assertNotIn("Valentin", text)
 
     def test_encounter_form_names_jarvis_as_counterpart(self) -> None:
         text = ENCOUNTER_FORM.read_text(encoding="utf-8")
