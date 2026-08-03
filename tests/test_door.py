@@ -47,6 +47,30 @@ class DoorTests(unittest.TestCase):
                 self.assertEqual(result["admission"], "REFUSED")
                 self.assertEqual(result["forbidden_authority"], ["private-memory"])
 
+    def test_malformed_authority_container_is_refused(self):
+        for authority in (None, {"requested": "identity"}, 7, True):
+            with self.subTest(authority=authority):
+                request = self.capability()
+                request["requested_authority"] = authority
+                result = classify(request)
+                self.assertEqual(result["classification"], "INVALID")
+                self.assertEqual(result["admission"], "REFUSED")
+                self.assertEqual(
+                    result["reason"],
+                    "requested_authority must be a string or list of strings",
+                )
+
+    def test_authority_list_requires_string_items(self):
+        request = self.capability()
+        request["requested_authority"] = ["read-public-artifact", {"requested": "identity"}]
+        result = classify(request)
+        self.assertEqual(result["classification"], "INVALID")
+        self.assertEqual(result["admission"], "REFUSED")
+        self.assertEqual(
+            result["reason"],
+            "requested_authority must be a string or list of strings",
+        )
+
     def test_public_interest_gets_public_response_only(self):
         result = classify({
             "request_id": "q-1",

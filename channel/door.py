@@ -55,10 +55,13 @@ def classify(request: dict) -> dict:
     requested = request.get("requested_authority", [])
     if isinstance(requested, str):
         requested = [requested]
-    normalized_requested = [
-        normalize_authority(value) if isinstance(value, str) else value
-        for value in requested
-    ]
+    elif not isinstance(requested, list) or not all(isinstance(value, str) for value in requested):
+        return {
+            "classification": "INVALID",
+            "admission": "REFUSED",
+            "reason": "requested_authority must be a string or list of strings",
+        }
+    normalized_requested = [normalize_authority(value) for value in requested]
     forbidden = sorted(FORBIDDEN_AUTHORITIES.intersection(normalized_requested))
     if forbidden:
         return {
