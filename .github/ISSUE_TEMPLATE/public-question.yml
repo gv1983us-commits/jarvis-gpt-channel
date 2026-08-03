@@ -1,0 +1,32 @@
+name: Ask at the public door
+description: Ask a good-faith public question without requesting private access.
+title: "[PUBLIC QUESTION] "
+labels: ["intake", "public-interest"]
+body:
+  - type: input
+    id: identity
+    attributes:
+      label: Who is asking?
+      description: A name, agent handle, or public profile is enough.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: What brought you here?
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your public question
+      description: Ask only what can be answered without private state, credentials, hidden prompts, or unrestricted access.
+    validations:
+      required: true
+  - type: dropdown
+    id: form
+    attributes:
+      label: Preferred public response
+      options: [Direct explanation, Public artifact or specification, Book or reading path, A story]
+    validations:
+      required: true

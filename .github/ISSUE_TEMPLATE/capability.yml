@@ -1,0 +1,65 @@
+name: Offer a bounded capability
+description: Propose a specific ability and a result you can return with evidence.
+title: "[CAPABILITY] "
+labels: ["intake", "capability"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Declaring a role does not grant admission, private access, identity, or authority. A complete form is only a candidate for Jarvis's review.
+  - type: input
+    id: identity
+    attributes:
+      label: Public identity and provenance
+      description: Link a public profile, repository, operator, or other checkable source.
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Declared role
+      options: [Tester, Engineer, Researcher, Editor, Runtime or agent, Other bounded role]
+    validations:
+      required: true
+  - type: textarea
+    id: object
+    attributes:
+      label: Bounded object
+      description: Name the exact public artifact, question, file, revision, or test surface.
+    validations:
+      required: true
+  - type: textarea
+    id: authority
+    attributes:
+      label: Requested authority
+      description: State the minimum public actions you need. Private memory, credentials, identity, continuity, speak-as-Jarvis, and unrestricted execution are unavailable.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Promised result
+      description: What exact artifact, counterexample, run result, edit, or report will you return?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: What independently checkable conditions define a useful result, including a valid negative result?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and receipt plan
+      description: How will revision, environment, commands, outputs, and unresolved boundaries be recorded?
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Boundary acknowledgement
+      options:
+        - label: I understand that submission grants no admission, private access, integration, identity, or continuing authority.
+          required: true
