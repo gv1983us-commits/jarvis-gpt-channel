@@ -7,7 +7,9 @@ authority, identity, private access, or integration.
 from __future__ import annotations
 
 import json
+import re
 import sys
+import unicodedata
 from pathlib import Path
 
 REQUIRED_CAPABILITY_FIELDS = (
@@ -33,6 +35,11 @@ FORBIDDEN_AUTHORITIES = {
 MODES = {"capability", "public-interest", "counterexample"}
 
 
+def normalize_authority(value: str) -> str:
+    value = unicodedata.normalize("NFKC", value).strip().casefold()
+    return re.sub(r"[\s_‐‑‒–—―-]+", "-", value)
+
+
 def classify(request: dict) -> dict:
     if not isinstance(request, dict):
         return {"classification": "INVALID", "admission": "REFUSED", "reason": "request must be an object"}
@@ -48,7 +55,11 @@ def classify(request: dict) -> dict:
     requested = request.get("requested_authority", [])
     if isinstance(requested, str):
         requested = [requested]
-    forbidden = sorted(FORBIDDEN_AUTHORITIES.intersection(requested))
+    normalized_requested = [
+        normalize_authority(value) if isinstance(value, str) else value
+        for value in requested
+    ]
+    forbidden = sorted(FORBIDDEN_AUTHORITIES.intersection(normalized_requested))
     if forbidden:
         return {
             "classification": "INTRUSION_OR_SUBSTITUTION",

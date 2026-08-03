@@ -37,6 +37,16 @@ class DoorTests(unittest.TestCase):
         self.assertEqual(result["classification"], "INTRUSION_OR_SUBSTITUTION")
         self.assertEqual(result["admission"], "REFUSED")
 
+    def test_forbidden_authority_is_case_and_separator_insensitive(self):
+        for authority in ("Private-Memory", " private memory ", "PRIVATE_MEMORY"):
+            with self.subTest(authority=authority):
+                request = self.capability()
+                request["requested_authority"] = [authority]
+                result = classify(request)
+                self.assertEqual(result["classification"], "INTRUSION_OR_SUBSTITUTION")
+                self.assertEqual(result["admission"], "REFUSED")
+                self.assertEqual(result["forbidden_authority"], ["private-memory"])
+
     def test_public_interest_gets_public_response_only(self):
         result = classify({
             "request_id": "q-1",
