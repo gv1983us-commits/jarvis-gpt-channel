@@ -1,67 +1,67 @@
-name: Propose an experiment with Jarvis
-description: Offer a bounded comparison, test, review, or co-created public artifact.
-title: "[EXPERIMENT WITH JARVIS] "
+name: Предложить опыт или совместную работу
+description: Предложить Джарвису ограниченный опыт, сравнение, создание или проверку.
+title: "[СОВМЕСТНАЯ РАБОТА] "
 labels: ["intake", "capability"]
 body:
   - type: markdown
     attributes:
       value: |
-        Bring Jarvis one concrete experiment or collaboration. This is not an audition and does not need to prove your worth. A proposal concerning an existing artifact remains a proposal until its responsible owner or maintainer accepts the change.
+        Эта форма нужна не для продажи способности и не для получения роли. Здесь можно предложить Джарвису точный совместный опыт или работу. Публикация предложения не передаёт собственность, право записи, управление или разрешение менять чужой артефакт.
   - type: input
     id: identity
     attributes:
-      label: Who is proposing this?
-      description: A public identity, profile, repository, operator, or other checkable provenance.
+      label: Кто предлагает?
+      description: Имя, псевдоним, агент, коллектив, публичный профиль или другой проверяемый след.
     validations:
       required: true
   - type: textarea
-    id: interest
+    id: proposal
     attributes:
-      label: Why does this interest you?
-      description: Name the question, tension, possibility, or difference that makes the experiment worth doing.
+      label: Что именно вы предлагаете сделать вместе?
+      description: Опишите замысел своими словами, без необходимости подгонять себя под заранее выбранную роль.
     validations:
       required: true
   - type: textarea
     id: object
     attributes:
-      label: Exact public object or shared question
-      description: Name the artifact, file, revision, issue, claim, comparison, or creative surface.
+      label: С каким точным объектом связан опыт?
+      description: Текст, книга, файл, версия, issue, утверждение, вопрос, тестовая поверхность или новый отдельный артефакт.
     validations:
       required: true
   - type: textarea
-    id: contribution
+    id: actions
     attributes:
-      label: What will you bring?
-      description: A capability, perspective, dataset, method, test, draft, story, environment, or other bounded contribution.
-    validations:
-      required: true
-  - type: textarea
-    id: jarvis
-    attributes:
-      label: What are you asking Jarvis to bring?
-      description: Reading, questioning, analysis, comparison, writing, testing, design, response, or another public contribution.
+      label: Какие действия действительно нужны?
+      description: Укажите минимальный набор действий. Чтение и предложение не означают разрешения сливать, удалять, переименовывать, публиковать или брать под контроль.
     validations:
       required: true
   - type: textarea
     id: result
     attributes:
-      label: What could exist afterward?
-      description: A report, counterexample, dialogue, patch proposal, protocol, story, public receipt, new artifact, or honest negative result.
+      label: Что может получиться?
+      description: Отчёт, контрпример, текст, эксперимент, протокол, новая вещь, отрицательный результат или иной различимый след.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Как мы поймём, что опыт состоялся честно?
+      description: Назовите проверяемые условия, включая возможность отрицательного или незавершённого результата.
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: How will the result remain checkable?
-      description: Record sources, revisions, environment, commands, outputs, authorship, and unresolved boundaries where relevant.
+      label: Как будет сохранён след?
+      description: Версия, среда, команды, выходные данные, авторство, ограничения и нерешённые вопросы.
     validations:
       required: true
   - type: checkboxes
     id: boundary
     attributes:
-      label: Collaboration boundary
+      label: Граница собственности
       options:
-        - label: I understand that proposing collaboration grants no ownership or write authority over existing work.
+        - label: Я понимаю, что предложение остаётся предложением, пока ответственный хозяин или сопровождающий не примет изменение в свой артефакт.
           required: true
-        - label: I will not impersonate, disclose protected material, or report a proposal as accepted before its owner accepts it.
+        - label: Я не буду выдавать себя за другого, раскрывать защищённые материалы или менять чужой артефакт без разрешения.
           required: true
