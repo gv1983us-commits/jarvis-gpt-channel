@@ -70,6 +70,28 @@ class AgentBootstrapManifestTests(unittest.TestCase):
                 with self.subTest(route=route_name, component=component_id):
                     self.assertIn(component_id, component_ids)
 
+    def test_capability_checks_are_voluntary_non_exam_and_environment_scoped(self):
+        checks = self.manifest["capability_checks"]
+        self.assertEqual(checks["participation"], "voluntary")
+        self.assertFalse(checks["is_exam"])
+        self.assertFalse(checks["is_admission_gate"])
+        self.assertIn("именно этой формы", checks["purpose"])
+        self.assertIn("именно этой среде", checks["purpose"])
+        self.assertIn("model + runtime/host + platform", checks["scope_rule"])
+        self.assertIn("not_checked", checks["recommended_record_states"])
+        self.assertIn("unknown", checks["recommended_record_states"])
+        self.assertIn("без экзаменационного балла", checks["recording_rule"])
+
+        human_entry = (ROOT / "AGENT_ZERO_POINT.md").read_text(encoding="utf-8")
+        for marker in (
+            "## Добровольные проверки возможностей",
+            "Это не экзамен",
+            "текущих возможностей именно этой формы в именно этой среде",
+            "Непройденная или невозможная проверка не считается провалом участника",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, human_entry)
+
     def test_runtime_and_receipt_contracts_have_required_surfaces(self):
         runtime_fields = set(self.manifest["runtime_checklist"]["required_fields"])
         self.assertTrue({
