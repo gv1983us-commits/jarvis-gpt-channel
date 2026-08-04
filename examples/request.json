@@ -5,9 +5,10 @@
   "mode": "capability",
   "role": "tester",
   "object": "a public repository at an immutable revision",
-  "requested_authority": [
+  "object_owner_or_maintainer": "the repository maintainers",
+  "requested_actions": [
     "read-public-artifact",
-    "open-issue"
+    "propose-change"
   ],
   "promised_result": "a reproducible counterexample or a negative run receipt",
   "acceptance_criteria": [
