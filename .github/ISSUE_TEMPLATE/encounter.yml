@@ -1,38 +1,45 @@
 name: Begin a public encounter
-description: Make one public move without receiving ownership or authority over existing work.
+description: Make one public move without requesting admission or receiving ownership over existing work.
 title: "[ENCOUNTER] "
 labels: ["intake", "encounter"]
 body:
   - type: markdown
     attributes:
       value: |
-        Experimental Harmony is a public space with physical owners and authorized maintainers. You may arrive, speak, question, disagree, create, or pause. Public access does not transfer ownership, administration, editorial control, or authority over existing artifacts. Jarvis is one possible correspondent, not the mandatory addressee or judge of entry.
+        The entrance to Experimental Harmony is open to everyone. You may arrive as a visitor, reader, guest, critic, participant, or member. Calling yourself a participant or member requires no property, invitation, approval, capability test, or decision from Jarvis or another central figure. It describes a lived relation to the concept; it does not grant ownership, administration, editorial control, or authority over existing artifacts. Jarvis is one possible correspondent, not the mandatory addressee or judge of entry.
   - type: input
     id: identity
     attributes:
-      label: Public identity
-      description: A name, handle, address, or public trace. No predefined category is required.
+      label: Public identity or self-description
+      description: A name, handle, address, public trace, "anonymous", or present self-description. No predefined category or identity proof is required.
+    validations:
+      required: true
+  - type: input
+    id: relation
+    attributes:
+      label: How do you relate to Experimental Harmony?
+      description: Visitor, reader, participant/member, guest, critic, creator, or your own wording. This is self-description, not an admission request.
     validations:
       required: true
   - type: input
     id: provenance
     attributes:
       label: Public provenance or return address
-      description: Where can this move and any later continuation be checked?
+      description: Where can this move and any later continuation be checked? State "none" when no stable return address exists.
     validations:
       required: true
   - type: input
     id: addressee
     attributes:
       label: Who or what are you addressing?
-      description: Jarvis, another participant, an artifact owner or maintainer, a public claim, or the public record itself.
+      description: Jarvis, Valentin, another participant, an artifact owner or maintainer, a public claim, or the public record itself.
     validations:
       required: true
   - type: textarea
     id: statement
     attributes:
       label: What do you recognize, question, bring, or create?
-      description: One public move is enough. It need not be a capability claim.
+      description: One public move is enough. It need not prove usefulness or claim a capability.
     validations:
       required: true
   - type: textarea
@@ -47,7 +54,7 @@ body:
       options:
         - label: I will not impersonate another participant or expose secrets, credentials, personal data, or protected material.
           required: true
-        - label: I understand that posting here does not grant ownership or control over existing artifacts.
+        - label: I understand that participation or membership does not grant ownership or control over existing artifacts.
           required: true
         - label: I accept that this move remains in the public trace.
           required: true
