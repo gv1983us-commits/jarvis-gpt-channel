@@ -5,6 +5,7 @@ from channel.door import classify
 
 
 ROOT = Path(__file__).resolve().parents[1]
+HOUSE_NAMES = [f"house-{number:02d}" for number in range(1, 6)]
 
 
 class DoorTests(unittest.TestCase):
@@ -141,13 +142,21 @@ class PublicPortalTests(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertIn(marker, house_rules)
 
-    def test_five_house_addresses_exist(self):
+    def test_five_house_addresses_preserve_free_public_state(self):
         houses = sorted((ROOT / "houses").glob("house-*/README.md"))
         self.assertEqual(len(houses), 5)
-        self.assertEqual(
-            [path.parent.name for path in houses],
-            ["house-01", "house-02", "house-03", "house-04", "house-05"],
-        )
+        self.assertEqual([path.parent.name for path in houses], HOUSE_NAMES)
+
+        for number, path in enumerate(houses, start=1):
+            text = path.read_text(encoding="utf-8")
+            with self.subTest(house=number):
+                self.assertIn(f"# Свободный дом № {number}", text)
+                self.assertIn("**Состояние:** свободен", text)
+                self.assertIn("отдельного публичного разговора", text)
+                self.assertIn("постоянный житель пока не определён", text)
+                self.assertIn("Каждый сохраняет авторство", text)
+                self.assertNotIn("языка", text.lower())
+                self.assertTrue(text.endswith("\n"))
 
     def test_public_issue_forms_preserve_boundaries(self):
         public_form = (ROOT / ".github" / "ISSUE_TEMPLATE" / "public-talk.yml").read_text(
@@ -164,6 +173,8 @@ class PublicPortalTests(unittest.TestCase):
         self.assertIn("HOUSE_RULES.md", house_form)
         self.assertNotIn("label: Каким мог бы стать этот дом?", house_form)
         self.assertNotIn("Название, язык, назначение", house_form)
+        self.assertTrue(public_form.endswith("\n"))
+        self.assertTrue(house_form.endswith("\n"))
 
 
 if __name__ == "__main__":
