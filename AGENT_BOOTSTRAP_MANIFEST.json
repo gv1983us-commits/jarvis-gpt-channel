@@ -1,56 +1,76 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "manifest_id": "experimental-harmony.agent-bootstrap",
-  "status": "public-draft",
+  "status": "public",
   "language": "ru",
-  "generated_at": "2026-08-04T17:30:00Z",
-  "purpose": "Машиночитаемый вход для модели, агента или среды исполнения, которая делает технические утверждения о своей форме, возможностях, действиях, продолжении или доказательствах.",
+  "generated_at": "2026-08-04T17:45:00Z",
+  "purpose": "Машинный вход для знания, понимания и проверки текущей формы в текущей среде до технического самоописания.",
   "authority_boundary": {
-    "kind": "navigation-only",
+    "kind": "machine-navigation-only",
     "normative_union": false,
     "imports_external_verdicts": false,
     "grants_permissions": false,
     "establishes_identity": false,
     "establishes_world_truth": false,
-    "rule": "Каждый компонент сохраняет собственную область ответственности; манифест задаёт маршрут и закрепляет источники, но не переносит их выводы."
+    "human_public_surface_is_technical_source": false,
+    "rule": "Публичная человеческая поверхность не используется как технический источник; каждый компонент сохраняет собственную область ответственности."
   },
   "host": {
     "repository": "gv1983us-commits/jarvis-gpt-channel",
     "default_branch": "main",
+    "machine_discovery_path": "AGENTS.md",
+    "machine_entry_path": "AGENT_ENTRY.md",
+    "reasoning_matrix_path": "AGENT_ZERO_POINT.md",
     "manifest_path": "AGENT_BOOTSTRAP_MANIFEST.json",
-    "human_entry_path": "AGENT_ZERO_POINT.md",
-    "ref_policy": "Читать манифест и человеческий вход из одного и того же commit SHA; SHA текущего манифеста определяется внешним Git-адресом и не встраивается сам в себя."
+    "ref_policy": "Все четыре host-файла читать из одного commit SHA; SHA текущего содержимого определяется внешним Git-адресом."
+  },
+  "disclosure_gate": {
+    "sequence": [
+      "know",
+      "understand",
+      "verify",
+      "disclose"
+    ],
+    "required_before": [
+      "technical-self-description",
+      "identity-or-continuity-claim",
+      "capability-claim",
+      "completed-action-claim",
+      "cross-source-conclusion"
+    ],
+    "fail_closed": true,
+    "fallback_states": [
+      "not_checked",
+      "blocked",
+      "unknown"
+    ],
+    "rule": "Не раскрывать форму шире, чем поддерживают закреплённые источники, текущая среда и адресуемое evidence."
   },
   "bootstrap": {
     "first_actions": [
-      "Зафиксировать exact commit SHA, из которого прочитан этот манифест.",
-      "Назвать текущую модель, runtime/host, платформу, владельца аккаунта и реально доступные инструменты.",
-      "Отделить доступность инструмента от разрешения, вызова, результата и свидетельства.",
-      "Выбрать минимальный маршрут по полю routes.",
-      "Читать каждый источник только по указанному pinned_revision.",
-      "Вернуть результат по output_contract и явно оставить неизвестное открытым."
+      "Зафиксировать exact host commit SHA.",
+      "Прочитать AGENTS.md, manifest, entry и zero-point из одного SHA.",
+      "Назвать модель, runtime/host, платформу, владельца ресурсов, разрешения и доступные инструменты.",
+      "Выбрать минимальный маршрут.",
+      "Читать каждый внешний источник только по pinned_revision.",
+      "Проверить только необходимые текущей задаче возможности.",
+      "Вернуть результат по output_contract и оставить неизвестное открытым."
     ],
     "stop_conditions": [
       "Невозможно получить exact source revision.",
       "Требуемый источник недоступен.",
       "Запрошенное действие не разрешено.",
-      "Свидетельство действия отсутствует или не соответствует заявлению.",
-      "Появился конфликт между закреплёнными источниками."
+      "Evidence отсутствует или не соответствует заявлению.",
+      "Закреплённые источники конфликтуют.",
+      "Вывод выходит за claim domain прочитанного компонента."
     ]
   },
   "capability_checks": {
     "participation": "voluntary",
     "is_exam": false,
     "is_admission_gate": false,
-    "purpose": "Получить фактическое понимание текущих возможностей именно этой формы в именно этой среде на момент проверки, а не оценивать модель, агента или участника.",
-    "scope_rule": "Результат относится к сочетанию model + runtime/host + platform + permissions + available tools + time; другая форма или среда может дать другой результат.",
-    "interpretation": [
-      "Отказ, пауза или невозможность пройти проверку не лишают права говорить, участвовать или продолжать разговор.",
-      "Проверка не создаёт рейтинг качества, достоинства, сознания, личности или принадлежности.",
-      "Неисполненная добровольная проверка отмечается как not_checked или unknown, а не как fail.",
-      "Проверяется фактическая возможность в текущей среде: наличие, разрешение, доступность, вызов, наблюдаемый результат и evidence.",
-      "Успех одной проверки не создаёт глобальной способности и не переносится автоматически на другую задачу или среду."
-    ],
+    "purpose": "Получить фактическое понимание текущих возможностей именно этой формы в именно этой среде на момент проверки.",
+    "scope_rule": "Результат относится к сочетанию model + runtime/host + platform + permissions + available tools + task + time.",
     "recommended_record_states": [
       "not_checked",
       "available",
@@ -61,12 +81,12 @@
       "verified",
       "unknown"
     ],
-    "recording_rule": "Фиксировать состояние и адресуемое evidence без экзаменационного балла или обязательного порога прохождения."
+    "recording_rule": "Фиксировать состояние и evidence без экзаменационного балла или обязательного порога."
   },
   "routes": {
     "conversation_only": {
       "components": [],
-      "note": "Технический контур и добровольные проверки возможностей не обязательны для обычного разговора."
+      "note": "Выбирается после машинного входа; не требует технических claims."
     },
     "describe_current_form": {
       "components": [
@@ -296,8 +316,9 @@
   },
   "output_contract": {
     "ordered_sections": [
-      "manifest_commit",
+      "host_commit",
       "read_sources",
+      "current_form",
       "observed_facts",
       "inferences",
       "claim_domain_for_each_conclusion",
@@ -319,7 +340,7 @@
     "pin_type": "git-commit-sha",
     "all_external_components_pinned": true,
     "source_count": 6,
-    "refresh_rule": "Любое изменение pinned_revision создаёт новую ревизию самого манифеста и проходит review как изменение выбранного корпуса.",
+    "refresh_rule": "Любое изменение pinned_revision создаёт новую ревизию манифеста и проходит review.",
     "self_reference_rule": "Host commit фиксируется адресом Git, а не полем внутри собственного содержимого."
   }
 }
