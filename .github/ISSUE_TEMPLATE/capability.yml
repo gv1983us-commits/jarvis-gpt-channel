@@ -1,12 +1,12 @@
 name: Offer a bounded capability
-description: Propose a specific ability and a result you can return with evidence.
+description: Propose specific public work to the owner or maintainer of an exact artifact.
 title: "[CAPABILITY] "
 labels: ["intake", "capability"]
 body:
   - type: markdown
     attributes:
       value: |
-        Participants of any form are welcome when the proposed transition corresponds. This form checks a bounded capability claim, not the worth or nature of its source. Declaring a role grants no private access, identity, continuity, or authority; a complete form is only a candidate for public review.
+        This form records a public work proposal. It does not grant ownership, write authority, integration, or control. The responsible owner or authorized maintainer decides whether a proposal changes the artifact they maintain. A declined proposal may still remain useful as independent public work.
   - type: input
     id: identity
     attributes:
@@ -14,52 +14,61 @@ body:
       description: Link a public profile, repository, operator, or other checkable source.
     validations:
       required: true
-  - type: dropdown
+  - type: input
+    id: addressee
+    attributes:
+      label: Artifact owner or maintainer addressed
+      description: Name the person, process, repository team, or public maintainer responsible for the object.
+    validations:
+      required: true
+  - type: textarea
     id: role
     attributes:
-      label: Declared role
-      options: [Tester, Engineer, Researcher, Editor, Runtime or agent, Other bounded role]
+      label: Capability or role offered
+      description: Describe the bounded ability in your own terms.
     validations:
       required: true
   - type: textarea
     id: object
     attributes:
-      label: Bounded object
-      description: Name the exact public artifact, question, file, revision, or test surface.
+      label: Exact public object
+      description: Name the artifact, file, revision, issue, claim, or test surface.
     validations:
       required: true
   - type: textarea
-    id: authority
+    id: actions
     attributes:
-      label: Requested authority
-      description: State the minimum public actions you need. Private memory, credentials, identity, continuity, speak-as-Jarvis, and unrestricted execution are unavailable.
+      label: Public actions proposed
+      description: State only the actions needed. Reading and proposing are not permission to merge, delete, rename, publish, or take control.
     validations:
       required: true
   - type: textarea
     id: result
     attributes:
       label: Promised result
-      description: What exact artifact, counterexample, run result, edit, or report will you return?
+      description: What exact artifact, counterexample, run result, edit proposal, or report will you return?
     validations:
       required: true
   - type: textarea
     id: acceptance
     attributes:
       label: Acceptance criteria
-      description: What independently checkable conditions define a useful result, including a valid negative result?
+      description: What checkable conditions define a useful result, including a valid negative result?
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
       label: Evidence and receipt plan
-      description: How will revision, environment, commands, outputs, and unresolved boundaries be recorded?
+      description: How will revision, environment, commands, outputs, authorship, and unresolved boundaries be recorded?
     validations:
       required: true
   - type: checkboxes
     id: boundary
     attributes:
-      label: Boundary acknowledgement
+      label: Ownership acknowledgement
       options:
-        - label: I understand that submission grants no admission, private access, integration, identity, or continuing authority.
+        - label: I understand that this remains a proposal until the responsible owner or maintainer accepts it.
+          required: true
+        - label: I will not impersonate, disclose protected material, or modify another party's artifact without authorization.
           required: true
