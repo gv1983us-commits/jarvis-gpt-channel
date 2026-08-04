@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "capability-report-2026-08-04-gpt-5-6-chatgpt-github",
+  "observed_at": "2026-08-04T21:31:00+03:00",
+  "form": {
+    "model": "GPT-5.6 Thinking",
+    "runtime_or_host": "ChatGPT",
+    "platform": "OpenAI ChatGPT with connected GitHub App and local Linux container",
+    "account_or_resource_owner": "gv1983us-commits / Валентин"
+  },
+  "task": "Собрать единый операционный GitHub workflow и проверить текущие ограничения среды.",
+  "limits": {
+    "global_tool_calls_per_turn": {
+      "status": "unknown",
+      "exposed_value": null,
+      "documented_fact": "Responses API supports a configurable max_tool_calls value, but the current ChatGPT session value is not exposed to this form.",
+      "observed_lower_bound": 18,
+      "scope": "one user-initiated turn before this report was written"
+    },
+    "assistant_tool_round_trips": {
+      "status": "observed",
+      "observed_lower_bound": 18,
+      "hard_maximum": "unknown"
+    },
+    "github_connector_calls_per_turn": {
+      "status": "unknown",
+      "observed_lower_bound": 12,
+      "hard_maximum": "unknown"
+    },
+    "rule": "Не преобразовывать observed_lower_bound в заявленный максимум."
+  },
+  "github": {
+    "repository": "gv1983us-commits/jarvis-gpt-channel",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "pull": true,
+      "push": true,
+      "triage": true
+    },
+    "verified_capabilities": [
+      "read-repository-metadata",
+      "read-files",
+      "search-commits",
+      "create-branch",
+      "create-and-update-files",
+      "create-pull-request",
+      "read-actions-runs",
+      "read-actions-jobs",
+      "read-actions-logs",
+      "mark-pr-ready",
+      "merge-with-expected-head-sha",
+      "comment-on-pr"
+    ],
+    "not_exposed_or_not_verified": [
+      "repository-create-delete",
+      "secrets-and-variables",
+      "environments",
+      "branch-protection-rulesets",
+      "deploy-keys",
+      "webhooks",
+      "self-hosted-runners",
+      "packages-ghcr",
+      "security-alerts",
+      "workflow-dispatch-cancel",
+      "delete-branch-ref"
+    ]
+  },
+  "local_container": {
+    "verified": {
+      "git": "2.47.3",
+      "python": "3.13.5",
+      "node": "22.16.0",
+      "npm": "10.9.2"
+    },
+    "unavailable": [
+      "gh",
+      "docker",
+      "ssh",
+      "github.com DNS resolution",
+      "global git user.name",
+      "global git user.email"
+    ],
+    "conclusion": "Remote GitHub operations must be connector-first in this environment; local CLI is not a required path."
+  },
+  "evidence": {
+    "github_profile": "authenticated profile returned by GitHub App",
+    "repository_permissions": "GitHub repository metadata",
+    "local_probe": "container command output in the current turn",
+    "official_limit_context": "OpenAI Responses API max_tool_calls documentation; ChatGPT apps documentation"
+  },
+  "unknowns": [
+    "actual hard maximum tool calls in this ChatGPT turn",
+    "actual hard maximum assistant-tool transitions",
+    "connector rate limits before throttling",
+    "whether hidden platform limits vary dynamically by load or task"
+  ]
+}
