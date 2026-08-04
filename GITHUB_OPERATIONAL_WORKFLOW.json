@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "experimental-harmony.github-operational-workflow",
+  "status": "active",
+  "language": "ru",
+  "purpose": "Единый операционный цикл GitHub: от задачи и проверки текущей формы до merge, BEC receipt и CDTS/PCA handoff.",
+  "authority_boundary": {
+    "grants_permissions": false,
+    "creates_authority": false,
+    "default_write_mode": "branch-and-draft-pull-request",
+    "direct_default_branch_write": false,
+    "destructive_actions_default": "prohibited",
+    "human_authority_required_for": [
+      "force-push",
+      "rewrite-published-history",
+      "delete-repository",
+      "change-secrets",
+      "change-ownership",
+      "change-branch-protection",
+      "merge-without-requested-review"
+    ]
+  },
+  "capability_probe": {
+    "required_before_write": true,
+    "scope": "current-form-current-environment-current-task-current-time",
+    "checks": [
+      "tool-present",
+      "permission-known",
+      "call-possible",
+      "observable-result",
+      "addressable-evidence",
+      "limits-known-or-explicitly-unknown"
+    ],
+    "unknown_limit_rule": "Не выдумывать максимум. Фиксировать exposed, documented, observed_lower_bound или unknown."
+  },
+  "states": [
+    "intake",
+    "capability-probed",
+    "repository-selected",
+    "authority-checked",
+    "source-pinned",
+    "branch-created",
+    "change-applied",
+    "checks-completed",
+    "receipt-prepared",
+    "pull-request-opened",
+    "review-resolved",
+    "merge-authorized",
+    "merged",
+    "post-merge-verified",
+    "handoff-recorded",
+    "closed",
+    "blocked",
+    "aborted"
+  ],
+  "transitions": [
+    {"from": "intake", "to": "capability-probed", "requires": ["task_id", "request", "runtime_report", "capability_report"]},
+    {"from": "capability-probed", "to": "repository-selected", "requires": ["repository", "selection_reason"]},
+    {"from": "repository-selected", "to": "authority-checked", "requires": ["account_owner", "repository_permissions", "task_authorization", "write_strategy"]},
+    {"from": "authority-checked", "to": "source-pinned", "requires": ["base_branch", "base_revision", "paths_in_scope", "paths_out_of_scope"]},
+    {"from": "source-pinned", "to": "branch-created", "requires": ["branch_name", "branch_creation_evidence"]},
+    {"from": "branch-created", "to": "change-applied", "requires": ["changed_paths", "change_commits"]},
+    {"from": "change-applied", "to": "checks-completed", "requires": ["checks", "check_results"]},
+    {"from": "checks-completed", "to": "receipt-prepared", "requires": ["bec_receipt"]},
+    {"from": "receipt-prepared", "to": "pull-request-opened", "requires": ["pull_request_url", "pull_request_number", "head_revision"]},
+    {"from": "pull-request-opened", "to": "review-resolved", "requires": ["review_state", "unresolved_threads"]},
+    {"from": "review-resolved", "to": "merge-authorized", "requires": ["merge_authority", "expected_head_revision", "required_checks_state"]},
+    {"from": "merge-authorized", "to": "merged", "requires": ["merge_method", "merge_revision", "merge_evidence"]},
+    {"from": "merged", "to": "post-merge-verified", "requires": ["default_branch_contains_change", "post_merge_checks"]},
+    {"from": "post-merge-verified", "to": "handoff-recorded", "requires": ["cdts_handoff", "pca_handoff"]},
+    {"from": "handoff-recorded", "to": "closed", "requires": ["final_receipt_location", "unknowns", "next_action"]}
+  ],
+  "stop_rules": [
+    {"condition": "permission-unknown-or-denied", "to": "blocked"},
+    {"condition": "base-revision-moved-before-write", "to": "blocked"},
+    {"condition": "required-check-failed", "to": "blocked"},
+    {"condition": "expected-head-sha-mismatch", "to": "blocked"},
+    {"condition": "unresolved-required-review", "to": "blocked"},
+    {"condition": "destructive-action-without-explicit-human-authority", "to": "aborted"},
+    {"condition": "evidence-does-not-support-claim", "to": "blocked"}
+  ],
+  "bec_receipt": {
+    "claim_domain": "execution-evidence",
+    "required_fields": [
+      "operation_id",
+      "actor_form",
+      "runtime_or_host",
+      "platform",
+      "tool",
+      "authorization",
+      "invocation",
+      "observed_result",
+      "evidence",
+      "trust_anchor",
+      "limitations"
+    ],
+    "rule": "Наличие инструмента не равно вызову; вызов не равен внешнему эффекту; внешний эффект без evidence не считается verified."
+  },
+  "cdts_handoff": {
+    "claim_domain": "cross-domain-correlation",
+    "required_links": ["task_record", "runtime_report", "bec_receipt", "pull_request", "ci_run", "merge_commit"],
+    "forbidden_inferences": ["world-truth", "identity", "causality-beyond-evidence", "same-event-without-proof"]
+  },
+  "pca_handoff": {
+    "claim_domain": "process-continuation",
+    "applicability_values": ["applicable", "not_applicable", "unknown"],
+    "rule": "Создавать transition record только при фактическом утверждении о продолжении процесса через смену формы, модели, runtime, host или корпуса; иначе записывать not_applicable."
+  },
+  "review_and_merge": {
+    "default_review_state": "required-for-canonical-change",
+    "draft_pr_default": true,
+    "merge_requires": ["exact-head-sha", "required-checks-success", "no-required-unresolved-review", "task-specific-merge-authority"],
+    "post_merge_requires": ["read-default-branch", "resolve-merge-sha", "confirm-changed-paths", "record-final-comment-or-external-receipt"]
+  },
+  "receipt_storage": {
+    "branch_phase": "PR body or committed operation record",
+    "final_phase": "comment on merged PR or external immutable record",
+    "self_reference_rule": "Merge SHA is added after merge in the merged PR discussion; no recursive follow-up commit is required solely to record itself."
+  }
+}
