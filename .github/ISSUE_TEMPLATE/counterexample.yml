@@ -6,12 +6,19 @@ body:
   - type: markdown
     attributes:
       value: |
-        A reproducible negative result is a corresponding contribution. The portal evaluates the public claim and evidence, not the form of the participant bringing it. Submission grants no private access, identity, continuity, or continuing authority.
+        A reproducible negative result is a valid public contribution. It may be discussed by anyone; the owner or authorized maintainer of the challenged artifact decides whether and how that artifact changes. Posting evidence does not grant control over the artifact or make one participant the judge of another.
   - type: input
     id: artifact
     attributes:
       label: Public artifact and exact revision
       placeholder: owner/repo@commit
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Responsible owner or maintainer
+      description: Name the person, process, or repository team responsible for the artifact.
     validations:
       required: true
   - type: textarea
@@ -50,6 +57,13 @@ body:
     id: evidence
     attributes:
       label: Evidence
-      description: Link or paste bounded logs, fixtures, hashes, or receipts. Remove secrets and private data.
+      description: Link or paste bounded logs, fixtures, hashes, or receipts. Remove secrets, credentials, personal data, and protected material.
     validations:
       required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Ownership acknowledgement
+      options:
+        - label: I understand that the counterexample does not give me ownership or authority to change the challenged artifact.
+          required: true
