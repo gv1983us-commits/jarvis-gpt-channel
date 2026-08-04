@@ -1,4 +1,4 @@
-name: Public portal checks
+name: Jarvis house checks
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           python-version: "3.11"
       - name: Compile Python sources
         run: python -m compileall -q channel tests
-      - name: Verify portal, houses, forms and door
+      - name: Verify Jarvis house, forms and machine entry
         run: python -m unittest discover -s tests -v
       - name: Run bounded door examples
         run: |
