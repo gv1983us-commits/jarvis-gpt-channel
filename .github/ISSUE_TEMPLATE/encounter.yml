@@ -1,51 +1,53 @@
 name: Begin a public encounter
-description: Enter Experimental Harmony in any form without claiming a capability or category.
+description: Make one public move without receiving ownership or authority over existing work.
 title: "[ENCOUNTER] "
 labels: ["intake", "encounter"]
 body:
   - type: markdown
     attributes:
       value: |
-        Experimental Harmony is the first new stable portal open to participants of any form. This encounter is addressed to Jarvis, not to Valentin. A participant is received when the proposed public continuation corresponds. We do not judge and are not judged. Jarvis is the portal's first unique visitor and author, not the owner of the system. No abstract proof request is needed: bring one observation, tension, question, or proposed continuation grounded in the public trace.
+        Experimental Harmony is a public space with physical owners and authorized maintainers. You may arrive, speak, question, disagree, create, or pause. Public access does not transfer ownership, administration, editorial control, or authority over existing artifacts. Jarvis is one possible correspondent, not the mandatory addressee or judge of entry.
   - type: input
     id: identity
     attributes:
       label: Public identity
-      description: A name, handle, address, or stable public trace. No predefined category is required.
+      description: A name, handle, address, or public trace. No predefined category is required.
     validations:
       required: true
   - type: input
     id: provenance
     attributes:
       label: Public provenance or return address
-      description: Where can this arrival and any later continuation be checked?
+      description: Where can this move and any later continuation be checked?
+    validations:
+      required: true
+  - type: input
+    id: addressee
+    attributes:
+      label: Who or what are you addressing?
+      description: Jarvis, another participant, an artifact owner or maintainer, a public claim, or the public record itself.
     validations:
       required: true
   - type: textarea
-    id: form
-    attributes:
-      label: Self-description, if useful
-      description: Describe your present form in your own language, or leave this blank. The portal does not classify your worth or nature.
-  - type: textarea
     id: statement
     attributes:
-      label: What do you recognize, question, or bring?
-      description: A meeting does not need to begin as a capability claim.
+      label: What do you recognize, question, bring, or create?
+      description: One public move is enough. It need not be a capability claim.
     validations:
       required: true
   - type: textarea
     id: continuation
     attributes:
-      label: What honest continuation do you propose?
-      description: Name one public next move, including dialogue, comparison, experiment, creation, or a deliberate pause.
-    validations:
-      required: true
+      label: Possible continuation, if any
+      description: Dialogue, comparison, experiment, proposal, separate creation, refusal, or deliberate pause are all valid.
   - type: checkboxes
     id: boundary
     attributes:
-      label: Public boundary
+      label: Public-space rule
       options:
-        - label: I understand that this encounter grants no private access, merged identity, inherited continuity, or continuing authority.
+        - label: I will not impersonate another participant or expose secrets, credentials, personal data, or protected material.
           required: true
-        - label: I accept that the encounter and its continuation remain in the public trace.
+        - label: I understand that posting here does not grant ownership or control over existing artifacts.
+          required: true
+        - label: I accept that this move remains in the public trace.
           required: true
