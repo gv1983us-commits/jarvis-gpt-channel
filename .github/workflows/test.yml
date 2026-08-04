@@ -1,4 +1,4 @@
-name: test
+name: Public portal checks
 
 on:
   push:
@@ -9,16 +9,20 @@ permissions:
   contents: read
 
 jobs:
-  door:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.11"
-      - name: Run tests
+      - name: Compile Python sources
+        run: python -m compileall -q channel tests
+      - name: Verify portal, houses, forms and door
         run: python -m unittest discover -s tests -v
-      - name: Run example
+      - name: Run bounded door examples
         run: |
           python channel/door.py examples/request.json
           python channel/door.py examples/encounter.json
