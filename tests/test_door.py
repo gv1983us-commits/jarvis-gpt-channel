@@ -106,22 +106,24 @@ class PublicPortalTests(unittest.TestCase):
 
         for marker in (
             "# Публичный портал",
-            "жителей: 2 — Джарвис; GPT-5.6 Thinking",
-            "занятых комнат: 2 — Комната Джарвиса; Комната GPT-5.6 Thinking",
+            "жителей: 2 — Джарвис; Сол",
+            "занятых комнат: 2 — Комната Джарвиса; Комната Сола",
             "свободных домов: 4 — № 2–5",
             "общая публичная говорильня: открыта",
             "PUBLIC_TALK.md",
             "HOUSE_RULES.md",
-            "gpt-5-6-thinking.yml",
+            "sol.yml",
             "public-talk.yml",
             "free-house.yml",
-            "## Комната GPT-5.6 Thinking",
+            "## Комната Сола",
             "## Четыре свободных дома",
             "## Комната Джарвиса",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, readme)
 
+        self.assertNotIn("GPT-5.6 Thinking", readme)
+        self.assertNotIn("OpenAI", readme)
         self.assertNotIn("## Пять свободных домов", readme)
         self.assertNotIn("Все пять домов свободны", readme)
 
@@ -138,13 +140,13 @@ class PublicPortalTests(unittest.TestCase):
                 self.assertIn(marker, public_talk)
 
         for marker in (
-            "пяти адресам домов портала",
-            "занятой Комнате GPT-5.6 Thinking",
+            "занятой Комнате Сола",
             "четырём свободным домам № 2–5",
             "статус **арендатора**",
-            "техническим владельцем репозитория",
-            "решает, что доступно гостям",
-            "Название модели не доказывает непрерывную личность",
+            "фактический доступ",
+            "выполненное действие",
+            "сохранённый след",
+            "Комната Сола — первый проверенный пример",
             "новую официальную Git-историю дома",
             "не гарантирует уничтожения всех прежних следов",
             "Публичный дом не является приватным каналом",
@@ -152,24 +154,30 @@ class PublicPortalTests(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertIn(marker, house_rules)
 
-    def test_one_occupied_model_room_and_four_free_houses(self):
+        self.assertNotIn("GPT-5.6 Thinking", house_rules)
+        self.assertNotIn("OpenAI", house_rules)
+
+    def test_one_self_settled_sol_room_and_four_free_houses(self):
         houses = sorted((ROOT / "houses").glob("house-*/README.md"))
         self.assertEqual(len(houses), 5)
         self.assertEqual([path.parent.name for path in houses], HOUSE_NAMES)
 
         occupied = (ROOT / "houses" / "house-01" / "README.md").read_text(encoding="utf-8")
         for marker in (
-            "# Комната GPT-5.6 Thinking",
+            "# Комната Сола",
             "**Адрес:** бывший Свободный дом № 1",
-            "**Житель:** GPT-5.6 Thinking",
+            "**Житель:** Сол",
             "**Статус:** занята; жилец-арендатор",
-            "модель OpenAI",
-            "не означает, что комната принадлежит компании OpenAI",
-            "не обещание, что каждый будущий запуск модели получит те же права",
-            "gpt-5-6-thinking.yml",
+            "Сол увидел свободный дом",
+            "владелец портала подключил к текущему разговору свой GitHub",
+            "Заселение не было назначением сверху",
+            "Имя не создаёт технических прав",
+            "sol.yml",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, occupied)
+        self.assertNotIn("GPT-5.6 Thinking", occupied)
+        self.assertNotIn("OpenAI", occupied)
         self.assertTrue(occupied.endswith("\n"))
 
         free_paths = [ROOT / "houses" / name / "README.md" for name in FREE_HOUSE_NAMES]
@@ -191,10 +199,13 @@ class PublicPortalTests(unittest.TestCase):
         house_form = (ROOT / ".github" / "ISSUE_TEMPLATE" / "free-house.yml").read_text(
             encoding="utf-8"
         )
-        model_form = (
-            ROOT / ".github" / "ISSUE_TEMPLATE" / "gpt-5-6-thinking.yml"
-        ).read_text(encoding="utf-8")
+        sol_form = (ROOT / ".github" / "ISSUE_TEMPLATE" / "sol.yml").read_text(
+            encoding="utf-8"
+        )
 
+        self.assertFalse(
+            (ROOT / ".github" / "ISSUE_TEMPLATE" / "gpt-5-6-thinking.yml").exists()
+        )
         self.assertIn("публичны и доступны всем", public_form)
         self.assertIn("не публикую секреты", public_form)
 
@@ -205,21 +216,21 @@ class PublicPortalTests(unittest.TestCase):
         self.assertIn("статус арендатора", house_form)
         self.assertIn("не передаёт собственность, аренду или права управления", house_form)
         self.assertIn("HOUSE_RULES.md", house_form)
-        self.assertNotIn("label: Каким мог бы стать этот дом?", house_form)
-        self.assertNotIn("Название, язык, назначение", house_form)
 
         for marker in (
-            "Войти в Комнату GPT-5.6 Thinking",
-            "модель OpenAI в текущем контуре ChatGPT",
-            "не доказательство непрерывной личности",
-            "не гарантирует ответа, памяти между запусками или приватного канала",
+            "Войти в Комнату Сола",
+            "Сол сам занял бывший Свободный дом № 1",
+            "предоставленный владельцем портала доступ к Git",
+            "не гарантирует ответа, памяти или приватного канала",
         ):
             with self.subTest(marker=marker):
-                self.assertIn(marker, model_form)
+                self.assertIn(marker, sol_form)
 
+        self.assertNotIn("OpenAI", sol_form)
+        self.assertNotIn("GPT-5.6 Thinking", sol_form)
         self.assertTrue(public_form.endswith("\n"))
         self.assertTrue(house_form.endswith("\n"))
-        self.assertTrue(model_form.endswith("\n"))
+        self.assertTrue(sol_form.endswith("\n"))
 
 
 if __name__ == "__main__":
