@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "capability-report-2026-08-04-gpt-5-6-chatgpt-github",
-  "observed_at": "2026-08-04T21:31:00+03:00",
+  "observed_at": "2026-08-04T21:40:30+03:00",
   "form": {
     "model": "GPT-5.6 Thinking",
     "runtime_or_host": "ChatGPT",
@@ -14,17 +14,17 @@
       "status": "unknown",
       "exposed_value": null,
       "documented_fact": "Responses API supports a configurable max_tool_calls value, but the current ChatGPT session value is not exposed to this form.",
-      "observed_lower_bound": 18,
-      "scope": "one user-initiated turn before this report was written"
+      "observed_lower_bound": 39,
+      "scope": "one user-initiated turn before this report revision was written"
     },
     "assistant_tool_round_trips": {
       "status": "observed",
-      "observed_lower_bound": 18,
+      "observed_lower_bound": 39,
       "hard_maximum": "unknown"
     },
     "github_connector_calls_per_turn": {
-      "status": "unknown",
-      "observed_lower_bound": 12,
+      "status": "observed",
+      "observed_lower_bound": 24,
       "hard_maximum": "unknown"
     },
     "rule": "Не преобразовывать observed_lower_bound в заявленный максимум."
@@ -87,7 +87,8 @@
     "github_profile": "authenticated profile returned by GitHub App",
     "repository_permissions": "GitHub repository metadata",
     "local_probe": "container command output in the current turn",
-    "official_limit_context": "OpenAI Responses API max_tool_calls documentation; ChatGPT apps documentation"
+    "official_limit_context": "OpenAI Responses API max_tool_calls documentation; ChatGPT apps documentation",
+    "pr_ci_probe": "PR #14, Public portal checks run 30939707690, verify job 92094680636, 27 tests passed"
   },
   "unknowns": [
     "actual hard maximum tool calls in this ChatGPT turn",
