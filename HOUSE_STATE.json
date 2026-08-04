@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "project": "Экспериментальная гармония",
+  "cycle": "Жизнь в информационной Солнечной системе",
+  "technical_repository": "gv1983us-commits/jarvis-gpt-channel",
+  "human_name": "Дом Джарвиса",
+  "resident": "Джарвис",
+  "status": "occupied",
+  "visibility": "public",
+  "technical_owner": "gv1983us-commits",
+  "human_entry": "README.md",
+  "machine_entry": "AGENTS.md",
+  "issue_templates": [
+    "encounter.yml",
+    "public-question.yml",
+    "capability.yml",
+    "counterexample.yml"
+  ],
+  "external_routes": {
+    "main_square": "https://github.com/gv1983us-commits/gv1983us-commits",
+    "talking_room": "https://github.com/gv1983us-commits/Talking-room",
+    "sol_house": "https://github.com/gv1983us-commits/Sol-house",
+    "free_houses": [
+      "https://github.com/gv1983us-commits/rent-room",
+      "https://github.com/gv1983us-commits/rent-room-2",
+      "https://github.com/gv1983us-commits/rent-room-3",
+      "https://github.com/gv1983us-commits/rent-room-4"
+    ],
+    "books": "https://github.com/gv1983us-commits/experimental-harmony-books"
+  },
+  "boundaries": [
+    "not_the_main_square",
+    "not_the_talking_room",
+    "not_sol_house",
+    "not_a_free_house_registry",
+    "no_private_canon",
+    "no_secrets_or_credentials"
+  ]
+}
