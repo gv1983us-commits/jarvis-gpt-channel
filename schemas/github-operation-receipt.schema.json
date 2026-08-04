@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/gv1983us-commits/jarvis-gpt-channel/schemas/github-operation-receipt.schema.json",
+  "title": "GitHub Operational Workflow Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "operation_id",
+    "task",
+    "state",
+    "repository",
+    "authority",
+    "source_pin",
+    "execution",
+    "checks",
+    "pull_request",
+    "merge",
+    "handoff",
+    "unknowns"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"type": "string", "minLength": 1},
+    "task": {"type": "string", "minLength": 1},
+    "state": {
+      "enum": [
+        "intake",
+        "capability-probed",
+        "repository-selected",
+        "authority-checked",
+        "source-pinned",
+        "branch-created",
+        "change-applied",
+        "checks-completed",
+        "receipt-prepared",
+        "pull-request-opened",
+        "review-resolved",
+        "merge-authorized",
+        "merged",
+        "post-merge-verified",
+        "handoff-recorded",
+        "closed",
+        "blocked",
+        "aborted"
+      ]
+    },
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "authority": {
+      "type": "object",
+      "required": ["account_owner", "task_authorization", "write_strategy"],
+      "properties": {
+        "account_owner": {"type": "string", "minLength": 1},
+        "task_authorization": {"type": "string", "minLength": 1},
+        "write_strategy": {"const": "branch-and-draft-pull-request"}
+      },
+      "additionalProperties": true
+    },
+    "source_pin": {
+      "type": "object",
+      "required": ["base_branch", "base_revision", "paths_in_scope"],
+      "properties": {
+        "base_branch": {"type": "string", "minLength": 1},
+        "base_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "paths_in_scope": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      },
+      "additionalProperties": true
+    },
+    "execution": {"type": "object"},
+    "checks": {"type": "array"},
+    "pull_request": {"type": ["object", "null"]},
+    "merge": {"type": ["object", "null"]},
+    "handoff": {"type": "object"},
+    "unknowns": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
