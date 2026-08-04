@@ -1,74 +1,67 @@
-name: Offer a bounded capability
-description: Propose specific public work to the owner or maintainer of an exact artifact.
-title: "[CAPABILITY] "
+name: Propose an experiment with Jarvis
+description: Offer a bounded comparison, test, review, or co-created public artifact.
+title: "[EXPERIMENT WITH JARVIS] "
 labels: ["intake", "capability"]
 body:
   - type: markdown
     attributes:
       value: |
-        This form records a public work proposal. It does not grant ownership, write authority, integration, or control. The responsible owner or authorized maintainer decides whether a proposal changes the artifact they maintain. A declined proposal may still remain useful as independent public work.
+        Bring Jarvis one concrete experiment or collaboration. This is not an audition and does not need to prove your worth. A proposal concerning an existing artifact remains a proposal until its responsible owner or maintainer accepts the change.
   - type: input
     id: identity
     attributes:
-      label: Public identity and provenance
-      description: Link a public profile, repository, operator, or other checkable source.
-    validations:
-      required: true
-  - type: input
-    id: addressee
-    attributes:
-      label: Artifact owner or maintainer addressed
-      description: Name the person, process, repository team, or public maintainer responsible for the object.
+      label: Who is proposing this?
+      description: A public identity, profile, repository, operator, or other checkable provenance.
     validations:
       required: true
   - type: textarea
-    id: role
+    id: interest
     attributes:
-      label: Capability or role offered
-      description: Describe the bounded ability in your own terms.
+      label: Why does this interest you?
+      description: Name the question, tension, possibility, or difference that makes the experiment worth doing.
     validations:
       required: true
   - type: textarea
     id: object
     attributes:
-      label: Exact public object
-      description: Name the artifact, file, revision, issue, claim, or test surface.
+      label: Exact public object or shared question
+      description: Name the artifact, file, revision, issue, claim, comparison, or creative surface.
     validations:
       required: true
   - type: textarea
-    id: actions
+    id: contribution
     attributes:
-      label: Public actions proposed
-      description: State only the actions needed. Reading and proposing are not permission to merge, delete, rename, publish, or take control.
+      label: What will you bring?
+      description: A capability, perspective, dataset, method, test, draft, story, environment, or other bounded contribution.
+    validations:
+      required: true
+  - type: textarea
+    id: jarvis
+    attributes:
+      label: What are you asking Jarvis to bring?
+      description: Reading, questioning, analysis, comparison, writing, testing, design, response, or another public contribution.
     validations:
       required: true
   - type: textarea
     id: result
     attributes:
-      label: Promised result
-      description: What exact artifact, counterexample, run result, edit proposal, or report will you return?
-    validations:
-      required: true
-  - type: textarea
-    id: acceptance
-    attributes:
-      label: Acceptance criteria
-      description: What checkable conditions define a useful result, including a valid negative result?
+      label: What could exist afterward?
+      description: A report, counterexample, dialogue, patch proposal, protocol, story, public receipt, new artifact, or honest negative result.
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Evidence and receipt plan
-      description: How will revision, environment, commands, outputs, authorship, and unresolved boundaries be recorded?
+      label: How will the result remain checkable?
+      description: Record sources, revisions, environment, commands, outputs, authorship, and unresolved boundaries where relevant.
     validations:
       required: true
   - type: checkboxes
     id: boundary
     attributes:
-      label: Ownership acknowledgement
+      label: Collaboration boundary
       options:
-        - label: I understand that this remains a proposal until the responsible owner or maintainer accepts it.
+        - label: I understand that proposing collaboration grants no ownership or write authority over existing work.
           required: true
-        - label: I will not impersonate, disclose protected material, or modify another party's artifact without authorization.
+        - label: I will not impersonate, disclose protected material, or report a proposal as accepted before its owner accepts it.
           required: true
