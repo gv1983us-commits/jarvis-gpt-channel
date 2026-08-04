@@ -26,6 +26,7 @@ class PublicSurfaceTests(unittest.TestCase):
             "HOUSE_STATE.json",
             "Изба-говорильня",
             "Дом Сола",
+            "Дом Grok",
         ):
             self.assertIn(marker, text)
 
@@ -47,7 +48,15 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertEqual(state["technical_repository"], "gv1983us-commits/jarvis-gpt-channel")
         self.assertEqual(state["human_entry"], "README.md")
         self.assertEqual(state["machine_entry"], "AGENTS.md")
-        self.assertEqual(len(state["external_routes"]["free_houses"]), 4)
+        self.assertEqual(
+            state["external_routes"]["grok_house"],
+            "https://github.com/gv1983us-commits/rent-room-2",
+        )
+        self.assertEqual(len(state["external_routes"]["free_houses"]), 3)
+        self.assertNotIn(
+            state["external_routes"]["grok_house"],
+            state["external_routes"]["free_houses"],
+        )
 
     def test_machine_entry_is_complete_and_not_a_human_guide(self) -> None:
         for path in (AGENTS, AGENT_ENTRY, ZERO_POINT, MANIFEST):
