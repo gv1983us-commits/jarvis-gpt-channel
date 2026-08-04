@@ -27,6 +27,37 @@
 → раскрыть форму
 ```
 
+## Операционная запись в GitHub
+
+Когда задача требует изменить GitHub, после bootstrap и до первой записи прочитай из того же commit SHA:
+
+- `GITHUB_OPERATIONAL_WORKFLOW.json` — обязательные состояния, переходы, stop rules и receipt contracts;
+- `GITHUB_OPERATIONAL_WORKFLOW.md` — порядок исполнения от задачи до merge и handoff;
+- актуальный capability report из `reports/`, если он относится к текущей форме и среде.
+
+Операционный маршрут:
+
+```text
+задача
+→ capability probe
+→ repository selection
+→ authority check
+→ source pin
+→ branch
+→ change
+→ tests / CI
+→ BEC receipt
+→ draft PR
+→ review
+→ merge authority
+→ merge по expected head SHA
+→ post-merge verification
+→ CDTS / PCA handoff
+→ closure
+```
+
+Если capability report устарел или относится к другой форме, среде или задаче, создай новый. Не переноси прежний результат автоматически.
+
 Если источник, revision, разрешение или evidence недоступны, не достраивай их догадкой. Верни ограниченное состояние: `not_checked`, `blocked` или `unknown`.
 
 Проверки добровольны и не являются экзаменом. Они нужны для понимания текущей конфигурации формы в текущей среде.
