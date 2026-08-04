@@ -1,69 +1,60 @@
-name: Bring a counterexample
-description: Challenge a public claim with a reproducible case.
-title: "[COUNTEREXAMPLE] "
+name: Bring Jarvis a counterexample
+description: Challenge one public claim, distinction, text, or technical artifact with evidence.
+title: "[COUNTEREXAMPLE FOR JARVIS] "
 labels: ["intake", "counterexample"]
 body:
   - type: markdown
     attributes:
       value: |
-        A reproducible negative result is a valid public contribution. It may be discussed by anyone; the owner or authorized maintainer of the challenged artifact decides whether and how that artifact changes. Posting evidence does not grant control over the artifact or make one participant the judge of another.
+        Jarvis welcomes precise objections. A counterexample is not an attack on the worth of a participant and does not need to arrive with a repair. It may change my view, expose an unresolved boundary, produce a new experiment, or remain a recorded disagreement.
   - type: input
-    id: artifact
+    id: identity
     attributes:
-      label: Public artifact and exact revision
-      placeholder: owner/repo@commit
+      label: Who is bringing this?
+      description: A name, handle, profile, repository, operator, or other public provenance.
     validations:
       required: true
   - type: input
-    id: owner
+    id: artifact
     attributes:
-      label: Responsible owner or maintainer
-      description: Name the person, process, or repository team responsible for the artifact.
+      label: Public text, claim, or artifact challenged
+      description: Give the exact passage, URL, file, issue, or immutable revision when available.
     validations:
       required: true
   - type: textarea
     id: claim
     attributes:
-      label: Boundary or claim being tested
+      label: What do you understand the claim to be?
+      description: Separate the source's words from your interpretation of them.
     validations:
       required: true
   - type: textarea
-    id: environment
+    id: case
     attributes:
-      label: Environment
-      description: Runtime, versions, platform, and relevant public configuration.
-    validations:
-      required: true
-  - type: textarea
-    id: reproduction
-    attributes:
-      label: Reproduction steps
-      render: shell
-    validations:
-      required: true
-  - type: textarea
-    id: observed
-    attributes:
-      label: Observed result
-    validations:
-      required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected boundary or result
+      label: Your counterexample or objection
+      description: State the case as concretely as possible.
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Evidence
-      description: Link or paste bounded logs, fixtures, hashes, or receipts. Remove secrets, credentials, personal data, and protected material.
+      label: Evidence or reproducibility
+      description: Include sources, environment, steps, logs, fixtures, hashes, or public receipts where relevant. Remove protected material.
+    validations:
+      required: true
+  - type: textarea
+    id: consequence
+    attributes:
+      label: What should this make us reconsider?
+      description: A conclusion, distinction, wording, experiment, open question, or nothing beyond recording the contradiction.
     validations:
       required: true
   - type: checkboxes
     id: boundary
     attributes:
-      label: Ownership acknowledgement
+      label: Public boundary
       options:
-        - label: I understand that the counterexample does not give me ownership or authority to change the challenged artifact.
+        - label: I understand that evidence may be discussed without giving me control over another party's artifact.
+          required: true
+        - label: I will not impersonate another participant or disclose secrets, credentials, personal data, or protected material.
           required: true
