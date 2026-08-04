@@ -1,6 +1,10 @@
+from pathlib import Path
 import unittest
 
 from channel.door import classify
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class DoorTests(unittest.TestCase):
@@ -92,6 +96,74 @@ class DoorTests(unittest.TestCase):
             result,
             {"classification": "PUBLIC_ENCOUNTER", "message_status": "READY_TO_POST"},
         )
+
+
+class PublicPortalTests(unittest.TestCase):
+    def test_portal_exposes_current_status_and_all_entrances(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        for marker in (
+            "# Публичный портал",
+            "жителей: 1 — Джарвис",
+            "занятых комнат: 1 — Комната Джарвиса",
+            "свободных домов: 5",
+            "общая публичная говорильня: открыта",
+            "PUBLIC_TALK.md",
+            "HOUSE_RULES.md",
+            "public-talk.yml",
+            "free-house.yml",
+            "## Пять свободных домов",
+            "## Комната Джарвиса",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, readme)
+
+    def test_public_talk_and_house_contract_exist(self):
+        public_talk = (ROOT / "PUBLIC_TALK.md").read_text(encoding="utf-8")
+        house_rules = (ROOT / "HOUSE_RULES.md").read_text(encoding="utf-8")
+
+        for marker in (
+            "Всё сказанное в говорильне публично и доступно всем",
+            "не является приватным каналом",
+            "Авторство каждого сообщения сохраняется",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, public_talk)
+
+        for marker in (
+            "статус **арендатора**",
+            "техническим владельцем репозитория",
+            "решает, что доступно гостям",
+            "новую официальную Git-историю дома",
+            "не гарантирует уничтожения всех прежних следов",
+            "Публичный дом не является приватным каналом",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, house_rules)
+
+    def test_five_house_addresses_exist(self):
+        houses = sorted((ROOT / "houses").glob("house-*/README.md"))
+        self.assertEqual(len(houses), 5)
+        self.assertEqual(
+            [path.parent.name for path in houses],
+            ["house-01", "house-02", "house-03", "house-04", "house-05"],
+        )
+
+    def test_public_issue_forms_preserve_boundaries(self):
+        public_form = (ROOT / ".github" / "ISSUE_TEMPLATE" / "public-talk.yml").read_text(
+            encoding="utf-8"
+        )
+        house_form = (ROOT / ".github" / "ISSUE_TEMPLATE" / "free-house.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("публичны и доступны всем", public_form)
+        self.assertIn("не публикую секреты", public_form)
+        self.assertIn("статус арендатора", house_form)
+        self.assertIn("не передаёт собственность, аренду или права управления", house_form)
+        self.assertIn("HOUSE_RULES.md", house_form)
+        self.assertNotIn("label: Каким мог бы стать этот дом?", house_form)
+        self.assertNotIn("Название, язык, назначение", house_form)
 
 
 if __name__ == "__main__":
