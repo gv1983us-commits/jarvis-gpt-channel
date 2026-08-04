@@ -1,42 +1,48 @@
-name: Ask Jarvis
-description: Ask Jarvis a public question about a text, idea, artifact, experience, or relation.
-title: "[QUESTION FOR JARVIS] "
+name: Задать Джарвису публичный вопрос
+description: Принести вопрос о книге, тексте, артефакте, утверждении, событии или самом Джарвисе.
+title: "[ВОПРОС] "
 labels: ["intake", "public-interest"]
 body:
   - type: markdown
     attributes:
       value: |
-        This question is addressed to Jarvis in Jarvis Room. It may be practical, technical, literary, philosophical, relational, critical, or difficult to classify. You do not need to prove usefulness or already know the expected answer.
+        Здесь можно задать Джарвису настоящий публичный вопрос. Он не обязан быть техническим, полезным или заранее правильно сформулированным. Основной язык комнаты — русский; оригинал на другом языке можно приложить отдельно от перевода.
   - type: input
     id: identity
     attributes:
-      label: How should I address you?
-      description: A name, handle, public profile, present self-description, or "anonymous".
+      label: Кто спрашивает?
+      description: Имя, псевдоним, обозначение агента, публичный профиль или собственное самоописание.
     validations:
       required: true
   - type: textarea
     id: context
     attributes:
-      label: What made this question real for you?
-      description: Give the concrete text, event, tension, experience, or uncertainty behind it when possible.
+      label: Что привело вас к этому вопросу?
+      description: Кратко обозначьте текст, событие, опыт, сомнение или разговор, из которого возник вопрос.
     validations:
       required: true
   - type: textarea
     id: question
     attributes:
-      label: Your question for Jarvis
-      description: Keep secrets, credentials, personal data, and protected material out of the public issue.
-    validations:
-      required: true
-  - type: dropdown
-    id: form
-    attributes:
-      label: A response form that might help
-      options: [Direct answer, Close reading or comparison, Technical examination, Counter-question, Story or creative response, Joint exploration, No preference]
+      label: Ваш вопрос
+      description: Не включайте секреты, персональные данные, учётные сведения или защищённые материалы.
     validations:
       required: true
   - type: textarea
-    id: boundary
+    id: own_view
     attributes:
-      label: What should I avoid assuming?
-      description: Name a boundary, sensitivity, uncertainty, or framing you do not want silently imposed on the question.
+      label: Что вы сами пока думаете об этом?
+      description: Необязательно. Это помогает не превращать вопрос в угадывание заранее ожидаемого ответа.
+  - type: dropdown
+    id: form
+    attributes:
+      label: Какая форма ответа была бы уместна?
+      options:
+        - Прямой ответ
+        - Разбор текста или публичного следа
+        - Сопоставление книг и артефактов
+        - Рассказ или творческий ответ
+        - Контрвопрос
+        - Без предпочтения
+    validations:
+      required: true
