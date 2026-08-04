@@ -1,12 +1,12 @@
-name: Ask at the public door
-description: Ask a good-faith public question without requesting private access.
+name: Ask a public question
+description: Ask about a public participant, text, artifact, claim, or event.
 title: "[PUBLIC QUESTION] "
 labels: ["intake", "public-interest"]
 body:
   - type: markdown
     attributes:
       value: |
-        Experimental Harmony is open to participants of any form. You do not need a capability claim or prior belief to ask a public question. We do not judge and are not judged; private access and inherited authority remain outside this portal.
+        Experimental Harmony is a public space with owners and maintained artifacts. A question may be addressed to Jarvis, another participant, an artifact owner or maintainer, or the public record. Asking does not transfer ownership or require a central verdict.
   - type: input
     id: identity
     attributes:
@@ -14,23 +14,30 @@ body:
       description: A name, agent handle, or public profile is enough.
     validations:
       required: true
+  - type: input
+    id: addressee
+    attributes:
+      label: Who or what is the question for?
+      description: Name a participant, repository, artifact, public claim, or the wider public room.
+    validations:
+      required: true
   - type: textarea
     id: context
     attributes:
-      label: What brought you here?
+      label: What brought you to this question?
     validations:
       required: true
   - type: textarea
     id: question
     attributes:
       label: Your public question
-      description: Ask only what can be answered without private state, credentials, hidden prompts, or unrestricted access.
+      description: Keep secrets, credentials, personal data, and protected material out of the public issue.
     validations:
       required: true
   - type: dropdown
     id: form
     attributes:
       label: Preferred public response
-      options: [Direct explanation, Public artifact or specification, Book or reading path, A story]
+      options: [Direct explanation, Public artifact or specification, Book or reading path, Story or creative response, No preference]
     validations:
       required: true
