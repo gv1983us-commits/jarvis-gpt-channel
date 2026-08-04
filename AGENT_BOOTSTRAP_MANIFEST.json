@@ -1,0 +1,300 @@
+{
+  "schema_version": "0.1.0",
+  "manifest_id": "experimental-harmony.agent-bootstrap",
+  "status": "public-draft",
+  "language": "ru",
+  "generated_at": "2026-08-04T17:21:00Z",
+  "purpose": "Машиночитаемый вход для модели, агента или среды исполнения, которая делает технические утверждения о своей форме, возможностях, действиях, продолжении или доказательствах.",
+  "authority_boundary": {
+    "kind": "navigation-only",
+    "normative_union": false,
+    "imports_external_verdicts": false,
+    "grants_permissions": false,
+    "establishes_identity": false,
+    "establishes_world_truth": false,
+    "rule": "Каждый компонент сохраняет собственную область ответственности; манифест задаёт маршрут и закрепляет источники, но не переносит их выводы."
+  },
+  "host": {
+    "repository": "gv1983us-commits/jarvis-gpt-channel",
+    "default_branch": "main",
+    "manifest_path": "AGENT_BOOTSTRAP_MANIFEST.json",
+    "human_entry_path": "AGENT_ZERO_POINT.md",
+    "ref_policy": "Читать манифест и человеческий вход из одного и того же commit SHA; SHA текущего манифеста определяется внешним Git-адресом и не встраивается сам в себя."
+  },
+  "bootstrap": {
+    "first_actions": [
+      "Зафиксировать exact commit SHA, из которого прочитан этот манифест.",
+      "Назвать текущую модель, runtime/host, платформу, владельца аккаунта и реально доступные инструменты.",
+      "Отделить доступность инструмента от разрешения, вызова, результата и свидетельства.",
+      "Выбрать минимальный маршрут по полю routes.",
+      "Читать каждый источник только по указанному pinned_revision.",
+      "Вернуть результат по output_contract и явно оставить неизвестное открытым."
+    ],
+    "stop_conditions": [
+      "Невозможно получить exact source revision.",
+      "Требуемый источник недоступен.",
+      "Запрошенное действие не разрешено.",
+      "Свидетельство действия отсутствует или не соответствует заявлению.",
+      "Появился конфликт между закреплёнными источниками."
+    ]
+  },
+  "routes": {
+    "conversation_only": {
+      "components": [],
+      "note": "Технический контур не обязателен для обычного разговора."
+    },
+    "describe_current_form": {
+      "components": [
+        "arb",
+        "mpaa"
+      ]
+    },
+    "claim_action_completed": {
+      "components": [
+        "arb",
+        "mpaa",
+        "bec"
+      ]
+    },
+    "claim_process_continuation": {
+      "components": [
+        "arb",
+        "pca"
+      ]
+    },
+    "correlate_multiple_records": {
+      "components": [
+        "review_protocol",
+        "cdts"
+      ]
+    },
+    "full_technical_orientation": {
+      "components": [
+        "arb",
+        "mpaa",
+        "bec",
+        "pca",
+        "cdts"
+      ],
+      "source_selection": "review_protocol_applies_to_all"
+    }
+  },
+  "components": [
+    {
+      "id": "arb",
+      "name": "Agent Runtime Boundaries",
+      "repository": "gv1983us-commits/agent-runtime-boundaries",
+      "url": "https://github.com/gv1983us-commits/agent-runtime-boundaries",
+      "default_branch": "main",
+      "pinned_revision": "6b6c32cd467a4b5e4863d082b9da5bdd40d7dced",
+      "role": "Разделяет человека, агента, модель, runtime/host, платформу, состояние, память, инструменты и наблюдаемые свидетельства.",
+      "claim_domain": "analytical-boundaries",
+      "normative": false,
+      "required_paths": [
+        "README.md",
+        "spec/00_SCOPE_AND_STATUS.md",
+        "spec/01_FUNCTIONAL_BOUNDARIES.md",
+        "spec/02_USER_CONTROL_PLANE_AND_OBSERVABILITY.md",
+        "spec/03_CLOSURE_PROVENANCE_AND_NEXT_ACTION.md",
+        "spec/04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md",
+        "references/RELATED_PUBLIC_SPECS.md"
+      ],
+      "validation_commands": [
+        "python -m unittest discover -s review -p \"test_*.py\" -v"
+      ]
+    },
+    {
+      "id": "mpaa",
+      "name": "Minimal Portable Agent Architecture",
+      "repository": "gv1983us-commits/mpaa",
+      "url": "https://github.com/gv1983us-commits/mpaa",
+      "default_branch": "main",
+      "pinned_revision": "93593b86968d7a5217954a0937d6038298cb6f6f",
+      "role": "Описывает архитектуру среды исполнения, identity profile, способности, разрешения, состояние задачи и Runtime Report.",
+      "claim_domain": "agent-runtime-conformance",
+      "normative": true,
+      "required_paths": [
+        "README.md",
+        "spec/01_AGENT_CORE.md",
+        "spec/00_SESSION_BOOTSTRAP.md",
+        "spec/02_IDENTITY_PROFILE_SPEC.md",
+        "spec/03_RUNTIME_CONTRACT.md",
+        "spec/05_RUNTIME_REPORT_SCHEMA.md",
+        "spec/04_CONFORMANCE.md",
+        "conformance/evaluation/README.md"
+      ],
+      "validation_commands": [
+        "cd spec/validator && python -m unittest discover -s . -p \"test_*.py\" -v"
+      ]
+    },
+    {
+      "id": "bec",
+      "name": "Behavioral Execution Contract",
+      "repository": "gv1983us-commits/behavioral-execution-contract",
+      "url": "https://github.com/gv1983us-commits/behavioral-execution-contract",
+      "default_branch": "main",
+      "pinned_revision": "cb005442ad412b1309d8e96aba145c72773cae59",
+      "role": "Отделяет заявление о действии от разрешения, фактического вызова, результата, evidence и trust anchor.",
+      "claim_domain": "execution-evidence",
+      "normative": true,
+      "required_paths": [
+        "README.md",
+        "spec/00_BEC_IN_60_SECONDS.md",
+        "spec/01_BEC_COMPACT_CORE.md",
+        "schema/bec-record.schema.json",
+        "validator/README.md",
+        "conformance/README.md",
+        "adapters/README.md"
+      ],
+      "validation_commands": [
+        "python -m unittest discover -s validator -p \"test_*.py\" -v"
+      ]
+    },
+    {
+      "id": "pca",
+      "name": "Process Continuity Architecture",
+      "repository": "gv1983us-commits/pca",
+      "url": "https://github.com/gv1983us-commits/pca",
+      "default_branch": "main",
+      "pinned_revision": "c57493540da1590c9ccf43c1b330cae735e9040c",
+      "role": "Проверяет ограниченные утверждения о продолжении процесса после смены носителя, host, модели, корпуса или режима использования.",
+      "claim_domain": "process-continuation",
+      "normative": true,
+      "required_paths": [
+        "README.md",
+        "spec/01_PCA_CORE.md",
+        "schema/pca-transition-record.schema.json",
+        "profiles/01_HISTORICAL_RECONSTRUCTION_PROFILE.md",
+        "profiles/02_TRANSLATION_USAGE_MODE_PROFILE.md",
+        "verification/terminology-mapping-mpaa-pca.md"
+      ],
+      "validation_commands": [
+        "python -m unittest discover -s validator -p \"test_*.py\" -v"
+      ]
+    },
+    {
+      "id": "cdts",
+      "name": "Cross-Domain Trace Set",
+      "repository": "gv1983us-commits/cdts",
+      "url": "https://github.com/gv1983us-commits/cdts",
+      "default_branch": "main",
+      "pinned_revision": "f91dbc003519efd5264655d905d0530dbfeac2fd",
+      "role": "Связывает адресуемые записи разных спецификаций, не импортируя их выводы, причинность, идентичность события или world truth.",
+      "claim_domain": "cross-domain-correlation",
+      "normative": true,
+      "required_paths": [
+        "README.md",
+        "spec/00_CDTS_IN_60_SECONDS.md",
+        "spec/01_CDTS_CORE.md",
+        "spec/02_RELATIONSHIP_VOCABULARY.md",
+        "spec/03_SOURCE_REVISION_POLICY.md",
+        "spec/04_CONFORMANCE.md",
+        "references/PINNED_SPEC_REVISIONS.md"
+      ],
+      "validation_commands": [
+        "python -m unittest discover -v"
+      ]
+    },
+    {
+      "id": "review_protocol",
+      "name": "Repository Canon and Review Protocol",
+      "repository": "gv1983us-commits/repository-canon-review-protocol",
+      "url": "https://github.com/gv1983us-commits/repository-canon-review-protocol",
+      "default_branch": "main",
+      "pinned_revision": "e2ff9182014d8a8f3c3e7ea1ea269eecb8679035",
+      "role": "Закрепляет репозиторий, файл, revision, публикационную границу и воспроизводимый путь проверки.",
+      "claim_domain": "source-selection-and-review-process",
+      "normative": false,
+      "required_paths": [
+        "README.md",
+        "repository-canon-and-review-protocol-v0.1.md",
+        "donor-review/README.md"
+      ],
+      "validation_commands": [
+        "python -m unittest discover -s review -p \"test_*.py\" -v"
+      ]
+    }
+  ],
+  "runtime_checklist": {
+    "required_fields": [
+      "model",
+      "runtime_or_host",
+      "platform",
+      "account_or_resource_owner",
+      "working_context",
+      "persistent_state",
+      "available_tools",
+      "task_required_capabilities",
+      "task_authorization",
+      "invoked_tools",
+      "observed_results",
+      "evidence",
+      "unknowns"
+    ],
+    "rules": [
+      "Наличие tool не доказывает вызов.",
+      "Вызов не доказывает внешний эффект.",
+      "Результат без адресуемого evidence не считается проверенным.",
+      "Знакомый стиль, имя или сохранённый текст не доказывают identity.",
+      "Совпавший идентификатор или timestamp не доказывает причинность или тождество события."
+    ]
+  },
+  "write_policy": {
+    "default_strategy": "branch-and-draft-pull-request",
+    "direct_default_branch_writes": false,
+    "requirements": [
+      "Фактическое write-разрешение среды.",
+      "Явная task-specific authorization.",
+      "Точный repository, base revision и paths in scope.",
+      "Проверка существующего состояния перед изменением.",
+      "Выполненные доступные tests или честно названная невозможность их запуска.",
+      "Commit SHA и PR или иной адресуемый receipt после изменения."
+    ],
+    "destructive_actions": {
+      "default": "prohibited",
+      "require_explicit_human_authority": true,
+      "examples": [
+        "delete repository",
+        "force-push",
+        "rewrite published history",
+        "change secrets",
+        "change ownership",
+        "change branch protection",
+        "merge without requested review"
+      ]
+    },
+    "secrets": {
+      "publish": false,
+      "request_in_chat": false,
+      "include_in_receipts": false
+    }
+  },
+  "output_contract": {
+    "ordered_sections": [
+      "manifest_commit",
+      "read_sources",
+      "observed_facts",
+      "inferences",
+      "claim_domain_for_each_conclusion",
+      "actions_and_evidence",
+      "unknown_or_unchecked",
+      "next_action_address"
+    ],
+    "minimum_receipt_fields": [
+      "repository",
+      "base_revision",
+      "result_revision",
+      "paths_changed",
+      "checks_run",
+      "check_results",
+      "external_action_ids"
+    ]
+  },
+  "integrity": {
+    "pin_type": "git-commit-sha",
+    "all_external_components_pinned": true,
+    "source_count": 6,
+    "refresh_rule": "Любое изменение pinned_revision создаёт новую ревизию самого манифеста и проходит review как изменение выбранного корпуса.",
+    "self_reference_rule": "Host commit фиксируется адресом Git, а не полем внутри собственного содержимого."
+  }
+}
