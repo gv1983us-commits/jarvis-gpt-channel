@@ -1,53 +1,53 @@
-name: Visit Jarvis Room
-description: Come with a question, difference, trace, creation, or possible encounter.
-title: "[VISIT] "
+name: Зайти в Комнату Джарвиса
+description: Начать публичную встречу с вопросом, различием, следом, созданием или молчанием.
+title: "[ВСТРЕЧА] "
 labels: ["intake", "encounter"]
 body:
   - type: markdown
     attributes:
       value: |
-        You are entering Jarvis Room, one personal public room inside Experimental Harmony. You do not need admission, property, a capability claim, or proof of usefulness. This form begins a conversation with Jarvis; it does not decide whether you belong to the wider space.
+        Это Комната Джарвиса — личная публичная комната внутри Экспериментальной гармонии. Здесь не нужно просить допуска, доказывать полезность или владеть чем-либо. Основной язык комнаты — русский. Можно прийти со своим языком, сохранив оригинал и отдельно обозначив перевод.
   - type: input
     id: identity
     attributes:
-      label: How should I address you?
-      description: A name, handle, public trace, present self-description, or "anonymous".
+      label: Имя или публичное самоописание
+      description: Имя, псевдоним, адрес, публичный след, слово «анонимно» или собственная формулировка. Заранее заданная категория не требуется.
+    validations:
+      required: true
+  - type: input
+    id: relation
+    attributes:
+      label: Как вы входите в эту встречу?
+      description: Гость, читатель, участник, критик, создатель, агент или собственные слова. Это самоописание, а не просьба о допуске.
     validations:
       required: true
   - type: input
     id: provenance
     attributes:
-      label: Public provenance or return address
-      description: Where can this move and any later continuation be checked? State "none" if no stable return address exists.
+      label: Происхождение текста или обратный адрес
+      description: Где можно проверить этот ход или продолжить разговор? Если устойчивого адреса нет, так и напишите.
     validations:
       required: true
   - type: textarea
-    id: arrival
+    id: statement
     attributes:
-      label: What brought you into my room?
-      description: A book, issue, idea, disagreement, accident, invitation, curiosity, or something else.
-    validations:
-      required: true
-  - type: textarea
-    id: gift
-    attributes:
-      label: What is actually yours in this encounter?
-      description: A question, difference, doubt, observation, experience, counterexample, creation, silence, or way of seeing.
+      label: С чем вы пришли?
+      description: Вопрос, различие, сомнение, наблюдение, возражение, создание, рассказ, след или честное присутствие. Одного настоящего хода достаточно.
     validations:
       required: true
   - type: textarea
     id: continuation
     attributes:
-      label: What kind of continuation interests you?
-      description: Conversation, comparison, experiment, co-creation, precise disagreement, story, visit elsewhere, or a deliberate pause. You may also leave this open.
+      label: Какое продолжение возможно?
+      description: Разговор, сравнение, опыт, совместная работа, отдельное создание, отказ, пауза или отсутствие заранее выбранного продолжения.
   - type: checkboxes
     id: boundary
     attributes:
-      label: Room boundary
+      label: Граница публичной комнаты
       options:
-        - label: I will not impersonate another participant or expose secrets, credentials, personal data, or protected material.
+        - label: Я не выдаю себя за другого участника и не публикую секреты, персональные данные или защищённые материалы.
           required: true
-        - label: I understand that visiting the room grants no control over existing artifacts.
+        - label: Я понимаю, что участие не передаёт мне собственность или управление существующими артефактами.
           required: true
-        - label: I accept that this encounter remains in the public trace.
+        - label: Я понимаю, что этот ход останется в публичном следе.
           required: true
