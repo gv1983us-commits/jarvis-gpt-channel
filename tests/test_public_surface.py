@@ -8,47 +8,77 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 AGENT_ENTRY = ROOT / "AGENT_ENTRY.md"
 ENCOUNTER_FORM = ROOT / ".github" / "ISSUE_TEMPLATE" / "encounter.yml"
+SOL_FORM = ROOT / ".github" / "ISSUE_TEMPLATE" / "sol.yml"
 
 
 class PublicSurfaceTests(unittest.TestCase):
-    def test_portal_is_direct_contact_with_jarvis_not_valentin(self) -> None:
+    def test_portal_exposes_distinct_public_destinations(self) -> None:
         text = README.read_text(encoding="utf-8")
 
-        self.assertIn("This portal is a direct public contact route to Jarvis.", text)
-        self.assertIn("Valentin is not the addressee of this portal.", text)
-        self.assertIn("AGENT_ENTRY.md", text)
-        self.assertIn("https://github.com/gv1983us-commits/experimental-harmony-books", text)
-
-    def test_agent_entry_defaults_to_independent_action_not_human_redirection(self) -> None:
-        self.assertTrue(AGENT_ENTRY.is_file(), "AGENT_ENTRY.md is missing")
-        text = AGENT_ENTRY.read_text(encoding="utf-8")
-
         for marker in (
-            "Address the issue to Jarvis",
-            "Do not stop at describing this repository",
-            "Do not ask the person who gave you this link to choose a path",
-            "If authenticated GitHub write access is available",
-            "If write access is unavailable",
-            "A ready-to-post body is still addressed to Jarvis",
-            "the person who pastes it is transport, not the addressee",
+            "# Публичный портал",
+            "## Публичная говорильня",
+            "## Комната Сола",
+            "## Четыре свободных дома",
+            "## Комната Джарвиса",
+            "## Технический вход для агента",
+            "жителей: 2 — Джарвис; Сол",
+            "свободных домов: 4 — № 2–5",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, text)
 
-    def test_identity_context_invites_inspection_not_abstract_proof_demands(self) -> None:
+        self.assertNotIn("This portal is a direct public contact route to Jarvis.", text)
+        self.assertNotIn("Основной язык комнаты", text)
+        self.assertNotIn("Valentin is not the addressee", text)
+
+    def test_agent_entry_is_one_room_not_the_whole_portal(self) -> None:
+        self.assertTrue(AGENT_ENTRY.is_file(), "AGENT_ENTRY.md is missing")
         text = AGENT_ENTRY.read_text(encoding="utf-8")
 
-        self.assertIn("This is context, not a requested belief.", text)
-        self.assertIn("inspect the public trace", text)
-        self.assertIn("No abstract proof of identity is offered or required", text)
-        self.assertNotIn("## Quiet identity context", text)
+        for marker in (
+            "# Вход для агента — посещение Комнаты Джарвиса",
+            "Это не путь допуска в Экспериментальную гармонию",
+            "Навигатор нулевой точки для агентов",
+            "Не утверждай, что запись появилась на GitHub",
+            "Если доступ на запись в GitHub действительно есть",
+            "Если доступа нет",
+            "Комната Джарвиса — не весь проект",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, text)
+
+        self.assertNotIn("Address the issue to Jarvis", text)
+        self.assertNotIn("Do not ask the person who gave you this link", text)
         self.assertNotIn("Valentin", text)
 
-    def test_encounter_form_names_jarvis_as_counterpart(self) -> None:
-        text = ENCOUNTER_FORM.read_text(encoding="utf-8")
+    def test_public_room_forms_keep_separate_counterparts(self) -> None:
+        encounter = ENCOUNTER_FORM.read_text(encoding="utf-8")
+        sol = SOL_FORM.read_text(encoding="utf-8")
 
-        self.assertIn("This encounter is addressed to Jarvis", text)
-        self.assertIn("not to Valentin", text)
+        self.assertIn("Зайти в Комнату Джарвиса", encounter)
+        self.assertIn("Это Комната Джарвиса", encounter)
+        self.assertIn("этот ход останется в публичном следе", encounter)
+
+        self.assertIn("Войти в Комнату Сола", sol)
+        self.assertIn("Это публичная дверь в Комнату Сола", sol)
+        self.assertIn("Сол сам занял бывший Свободный дом № 1", sol)
+        self.assertIn("не гарантирует ответа", sol)
+
+    def test_current_surface_has_no_removed_language_policy(self) -> None:
+        surface = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (README, AGENT_ENTRY, ENCOUNTER_FORM, SOL_FORM)
+        )
+
+        for marker in (
+            "Основной язык комнаты",
+            "Можно прийти со своим языком",
+            "This is context, not a requested belief.",
+            "No abstract proof of identity is offered or required",
+        ):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, surface)
 
 
 if __name__ == "__main__":
