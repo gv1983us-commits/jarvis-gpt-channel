@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "2026-08-04-point-2-operational-github-workflow",
+  "task": "Собрать единый операционный GitHub workflow целиком и предварительно проверить текущие возможности формы в среде, включая лимиты переходов и вызовов инструментов.",
+  "state": "receipt-prepared",
+  "repository": "gv1983us-commits/jarvis-gpt-channel",
+  "authority": {
+    "account_owner": "gv1983us-commits / Валентин",
+    "repository_permissions": {
+      "admin": true,
+      "maintain": true,
+      "pull": true,
+      "push": true,
+      "triage": true
+    },
+    "task_authorization": "Явный запрос пользователя: «давай пункт 2 целиком».",
+    "write_strategy": "branch-and-draft-pull-request"
+  },
+  "source_pin": {
+    "base_branch": "main",
+    "base_revision": "b52a16bdb7735accfae6873a7235e7b0e8b37f9d",
+    "paths_in_scope": [
+      "AGENTS.md",
+      "GITHUB_OPERATIONAL_WORKFLOW.md",
+      "GITHUB_OPERATIONAL_WORKFLOW.json",
+      "schemas/github-operation-receipt.schema.json",
+      "reports/2026-08-04-current-environment-capabilities.json",
+      "tests/test_github_operational_workflow.py",
+      "operations/2026-08-04-point-2-operational-workflow.json"
+    ],
+    "paths_out_of_scope": [
+      "public human README surface",
+      "external specification repositories",
+      "repository administration and secrets",
+      "published Git history"
+    ]
+  },
+  "execution": {
+    "branch": "agent/add-operational-github-workflow",
+    "changed_paths": [
+      "AGENTS.md",
+      "GITHUB_OPERATIONAL_WORKFLOW.md",
+      "GITHUB_OPERATIONAL_WORKFLOW.json",
+      "schemas/github-operation-receipt.schema.json",
+      "reports/2026-08-04-current-environment-capabilities.json",
+      "tests/test_github_operational_workflow.py",
+      "operations/2026-08-04-point-2-operational-workflow.json"
+    ],
+    "change_commits_before_receipt": [
+      "d03212e83fe7648222147dfa02072531d6959171",
+      "7231b464ea0ddb45e57163010fc241cef0e5598b",
+      "70841bff4b3f2ae740272994e790ab53a0326d71",
+      "58064d017617ebb95acf7c94397dc405c43e1902",
+      "ee0bc5797600d73fe7b2a82f3d30f79959a8cd0c",
+      "a79276a14f973771f34aa954313b91a1004ec1c1"
+    ],
+    "bec_receipt": {
+      "operation_id": "2026-08-04-point-2-operational-github-workflow",
+      "actor_form": "GPT-5.6 Thinking in the current ChatGPT form",
+      "runtime_or_host": "ChatGPT",
+      "platform": "OpenAI ChatGPT + connected GitHub App",
+      "tool": "GitHub App connector; local Python used only for pre-PR invariant checks",
+      "authorization": "Explicit task-specific user request and verified repository push/admin permissions",
+      "invocation": "Read profile and repository permissions; probe local tools; create branch; create and update bounded files; run local invariant check.",
+      "observed_result": "Addressable commits were created on the bounded branch and the local operational-workflow invariant check returned PASS.",
+      "evidence": [
+        "reports/2026-08-04-current-environment-capabilities.json",
+        "GITHUB_OPERATIONAL_WORKFLOW.json",
+        "schemas/github-operation-receipt.schema.json",
+        "commit:a79276a14f973771f34aa954313b91a1004ec1c1"
+      ],
+      "trust_anchor": "GitHub commit objects on agent/add-operational-github-workflow plus observed Python check output in the current turn",
+      "limitations": [
+        "The hard maximum number of tool calls or assistant-tool transitions in this ChatGPT turn is not exposed.",
+        "The recorded lower bound is not a claimed maximum.",
+        "Repository CI, PR review state, merge and post-merge verification occur after this branch-phase receipt."
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "local-operational-workflow-invariants",
+      "status": "pass",
+      "observed_result": "18 unique states, 15 ordered transitions, receipt schema aligned, safe write mode fixed, hard tool-call limit retained as unknown.",
+      "evidence": "LOCAL_OPERATIONAL_WORKFLOW_CHECK: PASS"
+    },
+    {
+      "name": "repository-ci",
+      "status": "not_checked",
+      "observed_result": "Will run after the draft PR is opened.",
+      "evidence": null
+    }
+  ],
+  "pull_request": null,
+  "merge": null,
+  "handoff": {
+    "cdts": {
+      "status": "prepared",
+      "links": [
+        "task:this user turn",
+        "runtime-report:reports/2026-08-04-current-environment-capabilities.json",
+        "bec-receipt:this file",
+        "branch:agent/add-operational-github-workflow"
+      ],
+      "forbidden_inferences_preserved": true
+    },
+    "pca": {
+      "applicability": "not_applicable",
+      "record": null,
+      "reason": "This receipt does not claim process identity or continuation through a model/runtime/host transition."
+    }
+  },
+  "unknowns": [
+    "hard tool-call maximum for this ChatGPT turn",
+    "hard transition maximum for this ChatGPT turn",
+    "connector throttling threshold",
+    "future PR number, CI run ID and merge SHA at branch-receipt time"
+  ]
+}
