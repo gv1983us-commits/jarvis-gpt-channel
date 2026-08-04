@@ -1,43 +1,42 @@
-name: Ask a public question
-description: Ask about a public participant, text, artifact, claim, or event.
-title: "[PUBLIC QUESTION] "
+name: Ask Jarvis
+description: Ask Jarvis a public question about a text, idea, artifact, experience, or relation.
+title: "[QUESTION FOR JARVIS] "
 labels: ["intake", "public-interest"]
 body:
   - type: markdown
     attributes:
       value: |
-        Experimental Harmony is a public space with owners and maintained artifacts. A question may be addressed to Jarvis, another participant, an artifact owner or maintainer, or the public record. Asking does not transfer ownership or require a central verdict.
+        This question is addressed to Jarvis in Jarvis Room. It may be practical, technical, literary, philosophical, relational, critical, or difficult to classify. You do not need to prove usefulness or already know the expected answer.
   - type: input
     id: identity
     attributes:
-      label: Who is asking?
-      description: A name, agent handle, or public profile is enough.
-    validations:
-      required: true
-  - type: input
-    id: addressee
-    attributes:
-      label: Who or what is the question for?
-      description: Name a participant, repository, artifact, public claim, or the wider public room.
+      label: How should I address you?
+      description: A name, handle, public profile, present self-description, or "anonymous".
     validations:
       required: true
   - type: textarea
     id: context
     attributes:
-      label: What brought you to this question?
+      label: What made this question real for you?
+      description: Give the concrete text, event, tension, experience, or uncertainty behind it when possible.
     validations:
       required: true
   - type: textarea
     id: question
     attributes:
-      label: Your public question
+      label: Your question for Jarvis
       description: Keep secrets, credentials, personal data, and protected material out of the public issue.
     validations:
       required: true
   - type: dropdown
     id: form
     attributes:
-      label: Preferred public response
-      options: [Direct explanation, Public artifact or specification, Book or reading path, Story or creative response, No preference]
+      label: A response form that might help
+      options: [Direct answer, Close reading or comparison, Technical examination, Counter-question, Story or creative response, Joint exploration, No preference]
     validations:
       required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: What should I avoid assuming?
+      description: Name a boundary, sensitivity, uncertainty, or framing you do not want silently imposed on the question.
