@@ -15,9 +15,14 @@ ISSUE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
 ISSUE_FORMS = {
     "encounter.yml": ISSUE_DIR / "encounter.yml",
     "public-question.yml": ISSUE_DIR / "public-question.yml",
-    "capability.yml": ISSUE_DIR / "capability.yml",
-    "counterexample.yml": ISSUE_DIR / "counterexample.yml",
 }
+RETIRED_PATHS = (
+    ISSUE_DIR / "capability.yml",
+    ISSUE_DIR / "counterexample.yml",
+    ROOT / "channel" / "door.py",
+    ROOT / "examples" / "request.json",
+    ROOT / "examples" / "encounter.json",
+)
 
 
 class PublicSurfaceTests(unittest.TestCase):
@@ -33,7 +38,13 @@ class PublicSurfaceTests(unittest.TestCase):
             "Дом № 4 — голос Claude",
         ):
             self.assertIn(marker, text)
-        for marker in ("# Публичный портал", "## Публичная говорильня", "## Комната Джарвиса"):
+        for marker in (
+            "# Публичный портал",
+            "## Публичная говорильня",
+            "## Комната Джарвиса",
+            "template=capability.yml",
+            "template=counterexample.yml",
+        ):
             self.assertNotIn(marker, text)
 
     def test_house_state_matches_public_surface(self) -> None:
@@ -62,6 +73,11 @@ class PublicSurfaceTests(unittest.TestCase):
                 self.assertIn("id: boundary", text)
                 self.assertIn("required: true", text)
                 self.assertNotIn("Комната Джарвиса", text)
+
+    def test_completed_special_intake_is_not_active(self) -> None:
+        for path in RETIRED_PATHS:
+            with self.subTest(path=path):
+                self.assertFalse(path.exists())
 
     def test_human_surface_does_not_name_a_language_gate(self) -> None:
         text = README.read_text(encoding="utf-8")
