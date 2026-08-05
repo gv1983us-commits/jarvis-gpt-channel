@@ -27,9 +27,7 @@
   ],
   "issue_templates": [
     "encounter.yml",
-    "public-question.yml",
-    "capability.yml",
-    "counterexample.yml"
+    "public-question.yml"
   ],
   "external_routes": {
     "main_square": "https://github.com/gv1983us-commits/gv1983us-commits",
