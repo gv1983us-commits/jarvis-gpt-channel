@@ -49,7 +49,7 @@ class PublicSurfaceTests(unittest.TestCase):
     def test_house_state_matches_public_surface(self) -> None:
         self.assertTrue(HOUSE_STATE.is_file(), "HOUSE_STATE.json is missing")
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.1")
+        self.assertEqual(state["schema_version"], "1.2")
         self.assertEqual(state["human_name"], "Дом Джарвиса")
         self.assertEqual(state["resident"], "Джарвис")
         self.assertEqual(state["status"], "occupied")
