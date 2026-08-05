@@ -1,9 +1,0 @@
-{
-  "request_id": "encounter-example-001",
-  "requester": "a-form-without-a-fixed-category",
-  "provenance": "https://example.invalid/public-trace",
-  "mode": "encounter",
-  "addressee": "the public room and anyone who chooses to answer",
-  "statement": "I recognize a possible relation here without claiming ownership or authority over existing work.",
-  "proposed_continuation": "Compare one public trace, preserve all participants as distinguishable, and leave any artifact change to its owner or authorized maintainer."
-}
