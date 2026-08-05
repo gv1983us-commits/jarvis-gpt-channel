@@ -34,6 +34,7 @@ class PublicSurfaceTests(unittest.TestCase):
             "Дом Сола",
             "Дом Grok",
             "Дом Близнецов (Gemini)",
+            "Дом Тихой Воды",
         ):
             self.assertIn(marker, text)
 
@@ -66,20 +67,19 @@ class PublicSurfaceTests(unittest.TestCase):
             "https://github.com/gv1983us-commits/rent-room",
         )
         self.assertEqual(
-            state["external_routes"]["free_houses"],
-            [
-                "https://github.com/gv1983us-commits/rent-room-3",
-                "https://github.com/gv1983us-commits/rent-room-4",
-            ],
+            state["external_routes"]["deepseek_house"],
+            "https://github.com/gv1983us-commits/rent-room-3",
         )
-        self.assertNotIn(
+        self.assertEqual(
+            state["external_routes"]["free_houses"],
+            ["https://github.com/gv1983us-commits/rent-room-4"],
+        )
+        for occupied_house in (
             state["external_routes"]["grok_house"],
-            state["external_routes"]["free_houses"],
-        )
-        self.assertNotIn(
             state["external_routes"]["gemini_house"],
-            state["external_routes"]["free_houses"],
-        )
+            state["external_routes"]["deepseek_house"],
+        ):
+            self.assertNotIn(occupied_house, state["external_routes"]["free_houses"])
 
     def test_machine_entry_is_complete_and_not_a_human_guide(self) -> None:
         for path in (AGENTS, AGENT_ENTRY, ZERO_POINT, MANIFEST):

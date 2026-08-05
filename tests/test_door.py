@@ -118,6 +118,7 @@ class PublicHouseTests(unittest.TestCase):
             "https://github.com/gv1983us-commits/Sol-house",
             "https://github.com/gv1983us-commits/rent-room",
             "https://github.com/gv1983us-commits/rent-room-2",
+            "https://github.com/gv1983us-commits/rent-room-3",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, readme)
@@ -155,15 +156,17 @@ class PublicHouseTests(unittest.TestCase):
         self.assertEqual(state["external_routes"]["sol_house"], "https://github.com/gv1983us-commits/Sol-house")
         self.assertEqual(state["external_routes"]["grok_house"], "https://github.com/gv1983us-commits/rent-room-2")
         self.assertEqual(state["external_routes"]["gemini_house"], "https://github.com/gv1983us-commits/rent-room")
-        self.assertEqual(len(state["external_routes"]["free_houses"]), 2)
+        self.assertEqual(state["external_routes"]["deepseek_house"], "https://github.com/gv1983us-commits/rent-room-3")
+        self.assertEqual(
+            state["external_routes"]["free_houses"],
+            ["https://github.com/gv1983us-commits/rent-room-4"],
+        )
         for occupied_house in (
             state["external_routes"]["grok_house"],
             state["external_routes"]["gemini_house"],
+            state["external_routes"]["deepseek_house"],
         ):
-            self.assertNotIn(
-                occupied_house,
-                state["external_routes"]["free_houses"],
-            )
+            self.assertNotIn(occupied_house, state["external_routes"]["free_houses"])
 
     def test_jarvis_issue_forms_preserve_public_boundaries(self):
         forms = {
