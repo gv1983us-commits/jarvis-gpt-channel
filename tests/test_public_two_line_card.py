@@ -40,7 +40,7 @@ class PublicTwoLineCardTests(unittest.TestCase):
 
     def test_house_state_records_separate_public_voice(self) -> None:
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.2")
+        self.assertEqual(state["schema_version"], "1.3")
         self.assertEqual(state["public_artifacts"], ["PUBLIC_TWO_LINE_CARD.md"])
         self.assertEqual(len(state["public_conversations"]), 1)
         conversation = state["public_conversations"][0]
@@ -50,6 +50,7 @@ class PublicTwoLineCardTests(unittest.TestCase):
         self.assertEqual(conversation["authorship"], "separate_resident_voices")
         self.assertIn("public_comment_does_not_create_shared_voice", state["boundaries"])
         self.assertIn("artifact_does_not_require_adoption", state["boundaries"])
+        self.assertEqual(state["external_routes"]["claude_house"]["PCA"], "not_applicable")
 
 
 if __name__ == "__main__":
