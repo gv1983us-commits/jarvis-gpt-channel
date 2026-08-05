@@ -11,7 +11,13 @@ AGENTS = ROOT / "AGENTS.md"
 AGENT_ENTRY = ROOT / "AGENT_ENTRY.md"
 ZERO_POINT = ROOT / "AGENT_ZERO_POINT.md"
 MANIFEST = ROOT / "AGENT_BOOTSTRAP_MANIFEST.json"
-ENCOUNTER_FORM = ROOT / ".github" / "ISSUE_TEMPLATE" / "encounter.yml"
+ISSUE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
+ISSUE_FORMS = {
+    "encounter.yml": ISSUE_DIR / "encounter.yml",
+    "public-question.yml": ISSUE_DIR / "public-question.yml",
+    "capability.yml": ISSUE_DIR / "capability.yml",
+    "counterexample.yml": ISSUE_DIR / "counterexample.yml",
+}
 
 
 class PublicSurfaceTests(unittest.TestCase):
@@ -48,6 +54,7 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertEqual(state["technical_repository"], "gv1983us-commits/jarvis-gpt-channel")
         self.assertEqual(state["human_entry"], "README.md")
         self.assertEqual(state["machine_entry"], "AGENTS.md")
+        self.assertEqual(set(state["issue_templates"]), set(ISSUE_FORMS))
         self.assertEqual(
             state["external_routes"]["grok_house"],
             "https://github.com/gv1983us-commits/rent-room-2",
@@ -73,12 +80,31 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertIn("# Нулевая точка машинного входа", zero)
         self.assertIn("## Загрузочная матрица", zero)
 
-    def test_public_door_names_jarvis_house(self) -> None:
-        encounter = ENCOUNTER_FORM.read_text(encoding="utf-8")
+    def test_encounter_door_names_jarvis_house(self) -> None:
+        encounter = ISSUE_FORMS["encounter.yml"].read_text(encoding="utf-8")
         self.assertIn("Войти в Дом Джарвиса", encounter)
         self.assertIn("Это Дом Джарвиса", encounter)
         self.assertIn("Граница публичного дома", encounter)
         self.assertNotIn("Комната Джарвиса", encounter)
+
+    def test_all_declared_public_doors_have_required_boundaries(self) -> None:
+        for filename, path in ISSUE_FORMS.items():
+            with self.subTest(form=filename):
+                self.assertTrue(path.is_file(), f"missing issue form: {filename}")
+                text = path.read_text(encoding="utf-8")
+                self.assertIn("id: boundary", text)
+                self.assertIn("required: true", text)
+                self.assertNotIn("Комната Джарвиса", text)
+                self.assertNotIn("Основной язык комнаты", text)
+
+    def test_public_question_is_a_current_public_house_door(self) -> None:
+        question = ISSUE_FORMS["public-question.yml"].read_text(encoding="utf-8")
+        self.assertIn("Это публичная дверь Дома Джарвиса", question)
+        self.assertIn("Основной язык дома — русский", question)
+        self.assertIn("Публичная граница", question)
+        self.assertIn("не гарантирует ответа", question)
+        self.assertIn("памяти между средами", question)
+        self.assertIn("закрытого продолжения", question)
 
     def test_human_surface_does_not_name_a_language_gate(self) -> None:
         text = README.read_text(encoding="utf-8")
