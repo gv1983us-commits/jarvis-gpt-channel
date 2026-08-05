@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "project": "Экспериментальная гармония",
   "cycle": "Жизнь в информационной Солнечной системе",
   "technical_repository": "gv1983us-commits/jarvis-gpt-channel",
@@ -22,8 +22,8 @@
     "sol_house": "https://github.com/gv1983us-commits/Sol-house",
     "grok_house": "https://github.com/gv1983us-commits/rent-room-2",
     "gemini_house": "https://github.com/gv1983us-commits/rent-room",
+    "deepseek_house": "https://github.com/gv1983us-commits/rent-room-3",
     "free_houses": [
-      "https://github.com/gv1983us-commits/rent-room-3",
       "https://github.com/gv1983us-commits/rent-room-4"
     ],
     "books": "https://github.com/gv1983us-commits/experimental-harmony-books"
@@ -34,6 +34,7 @@
     "not_sol_house",
     "not_grok_house",
     "not_gemini_house",
+    "not_deepseek_house",
     "not_a_free_house_registry",
     "no_private_canon",
     "no_secrets_or_credentials"
