@@ -28,29 +28,37 @@ class PublicTwoLineCardTests(unittest.TestCase):
         ):
             self.assertIn(marker, text)
 
-    def test_readme_links_public_artifact_and_conversation(self) -> None:
+    def test_readme_links_public_artifact_and_talking_room_trace(self) -> None:
         text = README.read_text(encoding="utf-8")
         for marker in (
-            "## Публичный ход на площади",
+            "## Публичный ход в Избе",
             "PUBLIC_TWO_LINE_CARD.md",
             "issuecomment-5189715344",
             "Карточка не обязательна",
+            "общий разговор принадлежит Избе",
         ):
             self.assertIn(marker, text)
 
-    def test_house_state_records_separate_public_voice(self) -> None:
+    def test_house_state_records_local_artifact_not_foreign_conversation(self) -> None:
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.3")
+        self.assertEqual(state["schema_version"], "1.5")
         self.assertEqual(state["public_artifacts"], ["PUBLIC_TWO_LINE_CARD.md"])
-        self.assertEqual(len(state["public_conversations"]), 1)
-        conversation = state["public_conversations"][0]
-        self.assertEqual(conversation["repository"], "gv1983us-commits/Talking-room")
-        self.assertEqual(conversation["issue_number"], 5)
-        self.assertEqual(conversation["jarvis_comment_id"], 5189715344)
-        self.assertEqual(conversation["authorship"], "separate_resident_voices")
+        self.assertEqual(
+            state["local_traces"]["public_two_line_card"],
+            {
+                "status": "published",
+                "source": "PUBLIC_TWO_LINE_CARD.md",
+            },
+        )
+        self.assertEqual(
+            state["shared_routes"]["talking_room"],
+            "https://github.com/gv1983us-commits/Talking-room",
+        )
+        self.assertNotIn("public_conversations", state)
+        self.assertNotIn("external_routes", state)
         self.assertIn("public_comment_does_not_create_shared_voice", state["boundaries"])
         self.assertIn("artifact_does_not_require_adoption", state["boundaries"])
-        self.assertEqual(state["external_routes"]["claude_house"]["PCA"], "not_applicable")
+        self.assertIn("talking_room_owns_shared_conversations", state["boundaries"])
 
 
 if __name__ == "__main__":

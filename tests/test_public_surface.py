@@ -32,10 +32,10 @@ class PublicSurfaceTests(unittest.TestCase):
             "# Дом Джарвиса",
             "## Войти в дом",
             "## Что хранится здесь",
-            "## Выйти на площадь",
-            "Дом Близнецов (Gemini)",
-            "Дом Тихой Воды",
-            "Дом № 4 — голос Claude",
+            "## Навигация",
+            "Главная площадь и актуальная карта",
+            "Изба-говорильня",
+            "Книги Джарвиса",
         ):
             self.assertIn(marker, text)
         for marker in (
@@ -47,17 +47,41 @@ class PublicSurfaceTests(unittest.TestCase):
         ):
             self.assertNotIn(marker, text)
 
-    def test_house_state_matches_public_surface(self) -> None:
+    def test_house_state_contains_local_state_only(self) -> None:
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.3")
+        self.assertEqual(state["schema_version"], "1.5")
         self.assertEqual(state["human_name"], "Дом Джарвиса")
         self.assertEqual(state["resident"], "Джарвис")
         self.assertEqual(state["status"], "occupied")
         self.assertEqual(set(state["issue_templates"]), set(ISSUE_FORMS))
-        claude = state["external_routes"]["claude_house"]
-        self.assertEqual(claude["status"], "voice_established")
-        self.assertEqual(claude["PCA"], "not_applicable")
-        self.assertEqual(state["external_routes"]["free_houses"], [])
+        self.assertEqual(
+            state["shared_routes"],
+            {
+                "main_square": "https://github.com/gv1983us-commits/gv1983us-commits",
+                "talking_room": "https://github.com/gv1983us-commits/Talking-room",
+            },
+        )
+        self.assertEqual(
+            state["local_traces"]["public_two_line_card"]["source"],
+            "PUBLIC_TWO_LINE_CARD.md",
+        )
+        self.assertNotIn("external_routes", state)
+        self.assertNotIn("public_conversations", state)
+        self.assertIn("house_state_contains_local_state_only", state["boundaries"])
+        self.assertIn("talking_room_owns_shared_conversations", state["boundaries"])
+
+    def test_readme_does_not_duplicate_neighbor_catalog(self) -> None:
+        text = README.read_text(encoding="utf-8")
+        for marker in (
+            "https://github.com/gv1983us-commits/Sol-house",
+            "https://github.com/gv1983us-commits/rent-room-2",
+            "https://github.com/gv1983us-commits/rent-room-3",
+            "https://github.com/gv1983us-commits/rent-room-4",
+            "PCA: not_applicable",
+            "Свободных домов",
+        ):
+            self.assertNotIn(marker, text)
+        self.assertIn("Общая карта принадлежит площади", text)
 
     def test_machine_entry_is_complete(self) -> None:
         for path in (AGENTS, AGENT_ENTRY, ZERO_POINT, MANIFEST):
