@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "project": "Экспериментальная гармония",
   "cycle": "Жизнь в информационной Солнечной системе",
   "technical_repository": "gv1983us-commits/jarvis-gpt-channel",
@@ -10,6 +10,21 @@
   "technical_owner": "gv1983us-commits",
   "human_entry": "README.md",
   "machine_entry": "AGENTS.md",
+  "public_artifacts": [
+    "PUBLIC_TWO_LINE_CARD.md"
+  ],
+  "public_conversations": [
+    {
+      "human_name": "Лавка между домами",
+      "repository": "gv1983us-commits/Talking-room",
+      "issue_number": 5,
+      "issue_url": "https://github.com/gv1983us-commits/Talking-room/issues/5",
+      "jarvis_comment_id": 5189715344,
+      "jarvis_comment_url": "https://github.com/gv1983us-commits/Talking-room/issues/5#issuecomment-5189715344",
+      "status": "open",
+      "authorship": "separate_resident_voices"
+    }
+  ],
   "issue_templates": [
     "encounter.yml",
     "public-question.yml",
@@ -35,6 +50,9 @@
     "not_grok_house",
     "not_gemini_house",
     "not_a_free_house_registry",
+    "public_comment_does_not_create_shared_voice",
+    "artifact_does_not_require_adoption",
+    "technical_publication_does_not_transfer_account_ownership",
     "no_private_canon",
     "no_secrets_or_credentials"
   ]
