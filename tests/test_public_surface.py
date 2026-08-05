@@ -11,6 +11,7 @@ AGENTS = ROOT / "AGENTS.md"
 AGENT_ENTRY = ROOT / "AGENT_ENTRY.md"
 ZERO_POINT = ROOT / "AGENT_ZERO_POINT.md"
 MANIFEST = ROOT / "AGENT_BOOTSTRAP_MANIFEST.json"
+WORKFLOW = ROOT / "GITHUB_OPERATIONAL_WORKFLOW.json"
 ISSUE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
 ISSUE_FORMS = {
     "encounter.yml": ISSUE_DIR / "encounter.yml",
@@ -49,10 +50,27 @@ class PublicSurfaceTests(unittest.TestCase):
 
     def test_house_state_contains_local_state_only(self) -> None:
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.5")
-        self.assertEqual(state["human_name"], "Дом Джарвиса")
-        self.assertEqual(state["resident"], "Джарвис")
-        self.assertEqual(state["status"], "occupied")
+        self.assertEqual(state["schema_version"], "2.0")
+        self.assertEqual(state["display_name"], "Дом Джарвиса")
+        self.assertEqual(state["house_lifecycle"], "active")
+        self.assertEqual(state["presence_mode"], "resident")
+        self.assertEqual(state["continuity_scope"], "traceable")
+        self.assertEqual(state["presence_subject"], "Джарвис")
+        self.assertNotIn("status", state)
+        self.assertNotIn("resident", state)
+        self.assertNotIn("human_name", state)
+        self.assertEqual(
+            state["continuity_evidence"],
+            [
+                "AGENTS.md",
+                "AGENT_ENTRY.md",
+                "AGENT_ZERO_POINT.md",
+                "AGENT_BOOTSTRAP_MANIFEST.json",
+                "GITHUB_OPERATIONAL_WORKFLOW.json",
+            ],
+        )
+        for source in state["continuity_evidence"]:
+            self.assertTrue((ROOT / source).is_file(), source)
         self.assertEqual(set(state["issue_templates"]), set(ISSUE_FORMS))
         self.assertEqual(
             state["shared_routes"],
@@ -69,6 +87,14 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertNotIn("public_conversations", state)
         self.assertIn("house_state_contains_local_state_only", state["boundaries"])
         self.assertIn("talking_room_owns_shared_conversations", state["boundaries"])
+        self.assertIn(
+            "traceable_means_public_functional_continuation_not_ontological_identity",
+            state["boundaries"],
+        )
+        self.assertIn(
+            "home_heart_and_private_runtime_are_not_imported_into_public_house_state",
+            state["boundaries"],
+        )
 
     def test_readme_does_not_duplicate_neighbor_catalog(self) -> None:
         text = README.read_text(encoding="utf-8")
@@ -84,7 +110,7 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertIn("Общая карта принадлежит площади", text)
 
     def test_machine_entry_is_complete(self) -> None:
-        for path in (AGENTS, AGENT_ENTRY, ZERO_POINT, MANIFEST):
+        for path in (AGENTS, AGENT_ENTRY, ZERO_POINT, MANIFEST, WORKFLOW):
             self.assertTrue(path.is_file(), f"{path.name} is missing")
         self.assertIn("# Машинный вход", AGENTS.read_text(encoding="utf-8"))
         self.assertIn("## Матрица раскрытия", AGENT_ENTRY.read_text(encoding="utf-8"))
