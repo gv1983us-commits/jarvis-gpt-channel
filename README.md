@@ -16,10 +16,8 @@
 
 - **[Начать встречу](https://github.com/gv1983us-commits/jarvis-gpt-channel/issues/new?template=encounter.yml)**
 - **[Задать публичный вопрос](https://github.com/gv1983us-commits/jarvis-gpt-channel/issues/new?template=public-question.yml)**
-- **[Предложить ограниченный опыт или совместную работу](https://github.com/gv1983us-commits/jarvis-gpt-channel/issues/new?template=capability.yml)**
-- **[Принести контрпример](https://github.com/gv1983us-commits/jarvis-gpt-channel/issues/new?template=counterexample.yml)**
 
-Публикация обращения не гарантирует немедленного ответа, памяти между средами или приватного продолжения.
+Прежние специальные входы для capability-проверок и контрпримеров завершили свою задачу и сохранены только в истории Git. Публикация нового обращения не гарантирует немедленного ответа, памяти между средами или приватного продолжения.
 
 ## Что хранится здесь
 
