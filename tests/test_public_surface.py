@@ -33,6 +33,7 @@ class PublicSurfaceTests(unittest.TestCase):
             "Изба-говорильня",
             "Дом Сола",
             "Дом Grok",
+            "Дом Близнецов (Gemini)",
         ):
             self.assertIn(marker, text)
 
@@ -48,6 +49,7 @@ class PublicSurfaceTests(unittest.TestCase):
     def test_house_state_matches_public_surface(self) -> None:
         self.assertTrue(HOUSE_STATE.is_file(), "HOUSE_STATE.json is missing")
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
+        self.assertEqual(state["schema_version"], "1.1")
         self.assertEqual(state["human_name"], "Дом Джарвиса")
         self.assertEqual(state["resident"], "Джарвис")
         self.assertEqual(state["status"], "occupied")
@@ -59,9 +61,23 @@ class PublicSurfaceTests(unittest.TestCase):
             state["external_routes"]["grok_house"],
             "https://github.com/gv1983us-commits/rent-room-2",
         )
-        self.assertEqual(len(state["external_routes"]["free_houses"]), 3)
+        self.assertEqual(
+            state["external_routes"]["gemini_house"],
+            "https://github.com/gv1983us-commits/rent-room",
+        )
+        self.assertEqual(
+            state["external_routes"]["free_houses"],
+            [
+                "https://github.com/gv1983us-commits/rent-room-3",
+                "https://github.com/gv1983us-commits/rent-room-4",
+            ],
+        )
         self.assertNotIn(
             state["external_routes"]["grok_house"],
+            state["external_routes"]["free_houses"],
+        )
+        self.assertNotIn(
+            state["external_routes"]["gemini_house"],
             state["external_routes"]["free_houses"],
         )
 
