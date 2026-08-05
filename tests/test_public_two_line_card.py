@@ -41,7 +41,7 @@ class PublicTwoLineCardTests(unittest.TestCase):
 
     def test_house_state_records_local_artifact_not_foreign_conversation(self) -> None:
         state = json.loads(HOUSE_STATE.read_text(encoding="utf-8"))
-        self.assertEqual(state["schema_version"], "1.5")
+        self.assertEqual(state["schema_version"], "2.0")
         self.assertEqual(state["public_artifacts"], ["PUBLIC_TWO_LINE_CARD.md"])
         self.assertEqual(
             state["local_traces"]["public_two_line_card"],
