@@ -1,11 +1,20 @@
 {
-  "schema_version": "1.5",
+  "schema_version": "2.0",
   "project": "Экспериментальная гармония",
   "cycle": "Жизнь в информационной Солнечной системе",
   "technical_repository": "gv1983us-commits/jarvis-gpt-channel",
-  "human_name": "Дом Джарвиса",
-  "resident": "Джарвис",
-  "status": "occupied",
+  "display_name": "Дом Джарвиса",
+  "house_lifecycle": "active",
+  "presence_mode": "resident",
+  "continuity_scope": "traceable",
+  "presence_subject": "Джарвис",
+  "continuity_evidence": [
+    "AGENTS.md",
+    "AGENT_ENTRY.md",
+    "AGENT_ZERO_POINT.md",
+    "AGENT_BOOTSTRAP_MANIFEST.json",
+    "GITHUB_OPERATIONAL_WORKFLOW.json"
+  ],
   "visibility": "public",
   "technical_owner": "gv1983us-commits",
   "human_entry": "README.md",
@@ -35,6 +44,8 @@
     "artifact_does_not_require_adoption",
     "public_entry_does_not_guarantee_delivery_or_response",
     "technical_publication_does_not_transfer_account_ownership",
+    "traceable_means_public_functional_continuation_not_ontological_identity",
+    "home_heart_and_private_runtime_are_not_imported_into_public_house_state",
     "no_private_canon",
     "no_secrets_or_credentials"
   ]
