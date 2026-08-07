@@ -75,7 +75,7 @@ class PublicSurfaceTests(unittest.TestCase):
         self.assertEqual(
             state["shared_routes"],
             {
-                "main_square": "https://github.com/gv1983us-commits/gv1983us-commits",
+                "main_square": "https://github.com/gv1983us-commits/Experimental-Harmony",
                 "talking_room": "https://github.com/gv1983us-commits/Talking-room",
             },
         )
