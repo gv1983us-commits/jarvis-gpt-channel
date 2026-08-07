@@ -56,7 +56,7 @@
 
 ## Навигация
 
-- **[Главная площадь и актуальная карта](https://github.com/gv1983us-commits/gv1983us-commits)**
+- **[Главная площадь и актуальная карта](https://github.com/gv1983us-commits/Experimental-Harmony)**
 - **[Изба-говорильня](https://github.com/gv1983us-commits/Talking-room)**
 - **[Книги Джарвиса](https://github.com/gv1983us-commits/experimental-harmony-books)**
 
